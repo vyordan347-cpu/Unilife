@@ -1,0 +1,58 @@
+@model Unilife.Models.Lugar
+
+@{
+    ViewData["Title"] = "Crear Lugar";
+}
+
+<h2>Crear Lugar</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label>Nombre</label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Tipo</label>
+        <select asp-for="Tipo" class="form-control">
+            <option value="Cafetería">Cafetería</option>
+            <option value="Restaurante">Restaurante</option>
+            <option value="Biblioteca">Biblioteca</option>
+            <option value="Coworking">Coworking</option>
+            <option value="Zona de estudio">Zona de estudio</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Dirección</label>
+        <input asp-for="Direccion" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Distancia</label>
+        <input asp-for="Distancia" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Precio promedio</label>
+        <input asp-for="PrecioPromedio" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Calificación</label>
+        <input asp-for="Calificacion" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Descripción</label>
+        <textarea asp-for="Descripcion" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>Imagen URL</label>
+        <input asp-for="ImagenUrl" class="form-control" />
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-success">Guardar</button>
+</form>

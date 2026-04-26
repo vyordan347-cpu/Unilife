@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Unilife.Data;
 
@@ -10,61 +11,14 @@ using Unilife.Data;
 namespace Unilife.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260426223031_ActualizarEventosLugares")]
+    partial class ActualizarEventosLugares
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
-
-            modelBuilder.Entity("Unilife.Models.Curso", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Aula")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Carrera")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CodigoAula")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Docente")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<TimeSpan>("HoraFin")
-                        .HasColumnType("TEXT");
-
-                    b.Property<TimeSpan>("HoraInicio")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Pabellon")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Semestre")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cursos");
-                });
 
             modelBuilder.Entity("Unilife.Models.Evento", b =>
                 {

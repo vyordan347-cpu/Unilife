@@ -1,0 +1,23 @@
+@model Unilife.Models.Evento
+
+<h2>Editar Evento</h2>
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Id" />
+
+    <input asp-for="Titulo" class="form-control" />
+    <input asp-for="Descripcion" class="form-control" />
+    <input asp-for="Fecha" type="date" class="form-control" />
+    <input asp-for="Hora" type="time" class="form-control" />
+    <input asp-for="Lugar" class="form-control" />
+
+    <select asp-for="TipoEvento" class="form-control">
+        <option value="General">General</option>
+        <option value="Carrera">Por carrera</option>
+    </select>
+
+    <input asp-for="CarreraId" class="form-control" />
+
+    <br />
+    <button type="submit" class="btn btn-warning">Actualizar</button>
+</form>

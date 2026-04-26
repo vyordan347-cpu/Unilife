@@ -1,0 +1,18 @@
+@model Unilife.Models.Lugar
+
+@{
+    ViewData["Title"] = "Eliminar Lugar";
+}
+
+<h2>Eliminar Lugar</h2>
+
+<p>¿Seguro que deseas eliminar este lugar?</p>
+
+<p><b>@Model.Nombre</b></p>
+<p>@Model.Tipo - @Model.Direccion</p>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

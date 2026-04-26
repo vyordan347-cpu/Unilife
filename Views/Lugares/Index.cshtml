@@ -1,0 +1,56 @@
+@model IEnumerable<Unilife.Models.Lugar>
+
+@{
+    ViewData["Title"] = "Lugares recomendados";
+}
+
+<h2>Lugares recomendados</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear nuevo lugar</a>
+</p>
+
+<form method="get">
+    <label>Filtrar por tipo:</label>
+    <select name="tipo" class="form-control" style="max-width: 300px; display: inline-block;">
+        <option value="">Todos</option>
+        <option value="Cafetería">Cafetería</option>
+        <option value="Restaurante">Restaurante</option>
+        <option value="Biblioteca">Biblioteca</option>
+        <option value="Coworking">Coworking</option>
+        <option value="Zona de estudio">Zona de estudio</option>
+    </select>
+    <button type="submit" class="btn btn-secondary">Filtrar</button>
+</form>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Dirección</th>
+            <th>Distancia</th>
+            <th>Precio promedio</th>
+            <th>Calificación</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>@item.Nombre</td>
+            <td>@item.Tipo</td>
+            <td>@item.Direccion</td>
+            <td>@item.Distancia</td>
+            <td>S/ @item.PrecioPromedio</td>
+            <td>@item.Calificacion</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Ver</a> |
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -10,17 +10,24 @@ namespace Unilife.Models
         public string Titulo { get; set; } = string.Empty;
 
         [Required]
-        public string Tipo { get; set; } = string.Empty;
+        public string Descripcion { get; set; } = string.Empty;
 
+        [Required]
         [DataType(DataType.Date)]
         public DateTime Fecha { get; set; }
 
+        [Required]
         [DataType(DataType.Time)]
         public TimeSpan Hora { get; set; }
 
         [Required]
         public string Lugar { get; set; } = string.Empty;
 
-        public int Interesados { get; set; }
+        [Required]
+        [Display(Name = "Tipo de evento")]
+        public string TipoEvento { get; set; } = string.Empty;
+
+        [Display(Name = "Carrera")]
+        public int? CarreraId { get; set; }
     }
 }

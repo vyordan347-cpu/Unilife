@@ -1,0 +1,12 @@
+@model Unilife.Models.Evento
+
+<h2>Eliminar Evento</h2>
+
+<p>¿Seguro que deseas eliminar este evento?</p>
+
+<p><b>@Model.Titulo</b></p>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+</form>
