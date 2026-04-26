@@ -6,53 +6,68 @@
 
 <h2>Crear Lugar</h2>
 
-<form asp-action="Create">
-    <div class="form-group">
-        <label>Nombre</label>
+<form asp-controller="Lugares" asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Nombre"></label>
         <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label>Tipo</label>
+    <div class="form-group mb-3">
+        <label asp-for="Tipo"></label>
         <select asp-for="Tipo" class="form-control">
+            <option value="">Seleccione un tipo</option>
             <option value="Cafetería">Cafetería</option>
             <option value="Restaurante">Restaurante</option>
             <option value="Biblioteca">Biblioteca</option>
             <option value="Coworking">Coworking</option>
             <option value="Zona de estudio">Zona de estudio</option>
         </select>
+        <span asp-validation-for="Tipo" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label>Dirección</label>
+    <div class="form-group mb-3">
+        <label asp-for="Direccion"></label>
         <input asp-for="Direccion" class="form-control" />
+        <span asp-validation-for="Direccion" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label>Distancia</label>
-        <input asp-for="Distancia" class="form-control" />
+    <div class="form-group mb-3">
+        <label asp-for="Distancia"></label>
+        <input asp-for="Distancia" class="form-control" placeholder="Ejemplo: 20 metros" />
+        <span asp-validation-for="Distancia" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label>Precio promedio</label>
-        <input asp-for="PrecioPromedio" class="form-control" />
+    <div class="form-group mb-3">
+        <label asp-for="PrecioPromedio"></label>
+        <input asp-for="PrecioPromedio" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="PrecioPromedio" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label>Calificación</label>
-        <input asp-for="Calificacion" class="form-control" />
+    <div class="form-group mb-3">
+        <label asp-for="Calificacion"></label>
+        <input asp-for="Calificacion" class="form-control" type="number" step="0.1" />
+        <span asp-validation-for="Calificacion" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label>Descripción</label>
+    <div class="form-group mb-3">
+        <label asp-for="Descripcion"></label>
         <textarea asp-for="Descripcion" class="form-control"></textarea>
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label>Imagen URL</label>
+    <div class="form-group mb-3">
+        <label asp-for="ImagenUrl"></label>
         <input asp-for="ImagenUrl" class="form-control" />
+        <span asp-validation-for="ImagenUrl" class="text-danger"></span>
     </div>
 
-    <br />
     <button type="submit" class="btn btn-success">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
 </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

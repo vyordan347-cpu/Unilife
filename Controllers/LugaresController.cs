@@ -45,17 +45,19 @@ namespace Unilife.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Lugar lugar)
         {
-            if (ModelState.IsValid)
+            ModelState.Remove("Id");
+
+            if (!ModelState.IsValid)
             {
-                _context.Add(lugar);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(lugar);
             }
 
-            return View(lugar);
+            _context.Lugares.Add(lugar);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -70,19 +72,21 @@ namespace Unilife.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Lugar lugar)
         {
             if (id != lugar.Id) return NotFound();
 
-            if (ModelState.IsValid)
+            ModelState.Remove("Id");
+
+            if (!ModelState.IsValid)
             {
-                _context.Update(lugar);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(lugar);
             }
 
-            return View(lugar);
+            _context.Lugares.Update(lugar);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -97,7 +101,6 @@ namespace Unilife.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var lugar = await _context.Lugares.FindAsync(id);
