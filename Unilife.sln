@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unilife", "Unilife.csproj", "{A41D2E56-4B21-3613-00B5-86F181DB186C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A41D2E56-4B21-3613-00B5-86F181DB186C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A41D2E56-4B21-3613-00B5-86F181DB186C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A41D2E56-4B21-3613-00B5-86F181DB186C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A41D2E56-4B21-3613-00B5-86F181DB186C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14ABA387-3B0E-48E0-9AA5-2E2570CA10BE}
+	EndGlobalSection
+EndGlobal
