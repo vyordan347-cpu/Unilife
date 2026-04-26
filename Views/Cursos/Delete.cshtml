@@ -1,0 +1,27 @@
+@model Unilife.Models.Curso
+
+@{
+    ViewData["Title"] = "Eliminar curso";
+}
+
+<h1>Eliminar curso</h1>
+
+<h4>¿Seguro que deseas eliminar este curso?</h4>
+
+<div class="card">
+    <div class="card-body">
+        <p><strong>Nombre:</strong> @Model.Nombre</p>
+        <p><strong>Carrera:</strong> @Model.Carrera</p>
+        <p><strong>Semestre:</strong> @Model.Semestre</p>
+        <p><strong>Docente:</strong> @Model.Docente</p>
+        <p><strong>Aula:</strong> @Model.CodigoAula</p>
+    </div>
+</div>
+
+<br />
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

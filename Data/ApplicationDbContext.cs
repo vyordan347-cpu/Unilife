@@ -13,5 +13,6 @@ namespace Unilife.Data
         public DbSet<Tarea> Tareas { get; set; }
         public DbSet<Lugar> Lugares { get; set; }
         public DbSet<Evento> Eventos { get; set; }
+        public DbSet<Curso> Cursos { get; set; }
     }
 }
