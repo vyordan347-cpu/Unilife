@@ -1,0 +1,22 @@
+@model Unilife.Models.Lugar
+
+@{
+    ViewData["Title"] = "Detalle del Lugar";
+}
+
+<h2>Detalle del Lugar</h2>
+
+@if (!string.IsNullOrEmpty(Model.ImagenUrl))
+{
+    <img src="@Model.ImagenUrl" alt="@Model.Nombre" style="max-width: 350px; border-radius: 10px;" />
+}
+
+<p><b>Nombre:</b> @Model.Nombre</p>
+<p><b>Tipo:</b> @Model.Tipo</p>
+<p><b>Dirección:</b> @Model.Direccion</p>
+<p><b>Distancia:</b> @Model.Distancia</p>
+<p><b>Precio promedio:</b> S/ @Model.PrecioPromedio</p>
+<p><b>Calificación:</b> @Model.Calificacion</p>
+<p><b>Descripción:</b> @Model.Descripcion</p>
+
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

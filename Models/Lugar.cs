@@ -24,5 +24,10 @@ namespace Unilife.Models
 
         [Display(Name = "Calificación")]
         public double Calificacion { get; set; }
+
+        public string Descripcion { get; set; } = string.Empty;
+
+        [Display(Name = "Imagen URL")]
+        public string ImagenUrl { get; set; } = string.Empty;
     }
 }

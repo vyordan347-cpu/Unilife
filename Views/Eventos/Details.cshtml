@@ -1,0 +1,10 @@
+@model Unilife.Models.Evento
+
+<h2>Detalle del Evento</h2>
+
+<p><b>Título:</b> @Model.Titulo</p>
+<p><b>Descripción:</b> @Model.Descripcion</p>
+<p><b>Fecha:</b> @Model.Fecha.ToShortDateString()</p>
+<p><b>Hora:</b> @Model.Hora</p>
+<p><b>Lugar:</b> @Model.Lugar</p>
+<p><b>Tipo:</b> @Model.TipoEvento</p>
