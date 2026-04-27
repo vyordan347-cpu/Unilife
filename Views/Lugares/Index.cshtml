@@ -1,56 +1,79 @@
 @model IEnumerable<Unilife.Models.Lugar>
 
 @{
-    ViewData["Title"] = "Lugares recomendados";
+    ViewData["Title"] = "Lugares";
 }
 
-<h2>Lugares recomendados</h2>
+<div class="app-page">
+    <aside class="sidebar-unilife">
+        <div class="logo-unilife">🛡 UniLife</div>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Crear nuevo lugar</a>
-</p>
+        <a class="menu-link" asp-controller="Home" asp-action="Index">⌂ Inicio</a>
+        <a class="menu-link" href="#">☑ Tareas</a>
+        <a class="menu-link active" asp-controller="Lugares" asp-action="Index">⌖ Lugares</a>
+        <a class="menu-link" asp-controller="Eventos" asp-action="Index">▣ Eventos</a>
+        <a class="menu-link" href="#">♙ Perfil</a>
+    </aside>
 
-<form method="get">
-    <label>Filtrar por tipo:</label>
-    <select name="tipo" class="form-control" style="max-width: 300px; display: inline-block;">
-        <option value="">Todos</option>
-        <option value="Cafetería">Cafetería</option>
-        <option value="Restaurante">Restaurante</option>
-        <option value="Biblioteca">Biblioteca</option>
-        <option value="Coworking">Coworking</option>
-        <option value="Zona de estudio">Zona de estudio</option>
-    </select>
-    <button type="submit" class="btn btn-secondary">Filtrar</button>
-</form>
+    <main class="content-unilife">
+        <h1 class="page-title">Lugares cercanos</h1>
+        <p class="page-subtitle">Descubre restaurantes, cafeterías y bibliotecas cerca de ti</p>
 
-<table class="table table-bordered mt-3">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Dirección</th>
-            <th>Distancia</th>
-            <th>Precio promedio</th>
-            <th>Calificación</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model)
-{
-        <tr>
-            <td>@item.Nombre</td>
-            <td>@item.Tipo</td>
-            <td>@item.Direccion</td>
-            <td>@item.Distancia</td>
-            <td>S/ @item.PrecioPromedio</td>
-            <td>@item.Calificacion</td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Ver</a> |
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <form method="get" class="mb-4">
+            <input type="text" name="buscar" value="@ViewBag.Buscar" class="form-control search-box" placeholder="🔍 Buscar lugares..." />
+        </form>
+
+        <div class="d-flex flex-wrap gap-2 mb-4">
+            <a asp-action="Index" class="filter-btn active">Todos</a>
+            <a asp-action="Index" asp-route-tipo="Restaurante" class="filter-btn">🍴 Restaurantes</a>
+            <a asp-action="Index" asp-route-tipo="Cafetería" class="filter-btn">☕ Cafeterías</a>
+            <a asp-action="Index" asp-route-tipo="Biblioteca" class="filter-btn">📖 Bibliotecas</a>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                string icono = "☕";
+
+                if (item.Tipo == "Restaurante")
+                {
+                    icono = "🍴";
+                }
+                else if (item.Tipo == "Biblioteca")
+                {
+                    icono = "📖";
+                }
+                else if (item.Tipo == "Coworking")
+                {
+                    icono = "💻";
+                }
+
+                <div class="col-md-4">
+                    <div class="place-card">
+                        <div class="d-flex justify-content-between">
+                            <div class="place-icon">@icono</div>
+                            <div class="rating-badge">⭐ @item.Calificacion</div>
+                        </div>
+
+                        <h5 class="place-title">@item.Nombre</h5>
+                        <p class="place-description">@item.Descripcion</p>
+
+                        <div class="place-footer">
+                            <span>📍 @item.Distancia</span>
+                            <span>💲 S/ @item.PrecioPromedio</span>
+                        </div>
+
+                        <div class="d-flex gap-2 mt-3">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm w-100">Ver</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm w-100">Editar</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="mt-4">
+            <a asp-action="Create" class="btn btn-danger px-4">+ Crear lugar</a>
+        </div>
+    </main>
+</div>
