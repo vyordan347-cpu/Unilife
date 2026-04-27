@@ -6,9 +6,12 @@
 
 <h2>Eventos</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Crear nuevo evento</a>
-</p>
+@if (User.IsInRole("Coordinador"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Crear nuevo evento</a>
+    </p>
+}
 
 <form method="get">
     <label>Filtrar por tipo:</label>
@@ -41,9 +44,16 @@
             <td>@item.Lugar</td>
             <td>@item.TipoEvento</td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Ver</a> |
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Ver</a>
+
+                @if (User.IsInRole("Coordinador"))
+                {
+                    <text> | </text>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+
+                    <text> | </text>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                }
             </td>
         </tr>
 }

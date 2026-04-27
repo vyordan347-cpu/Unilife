@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Unilife.Data;
 using Unilife.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Unilife.Controllers
 {
+    [Authorize]
+
     public class EventosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -46,10 +49,12 @@ namespace Unilife.Controllers
             return View(evento);
         }
 
+        [Authorize(Roles = "Coordinador")]
         public IActionResult Create()
         {
             return View();
         }
+        [Authorize(Roles = "Coordinador")]
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -65,6 +70,8 @@ namespace Unilife.Controllers
             return View(evento);
         }
 
+        [Authorize(Roles = "Coordinador")]
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -75,6 +82,7 @@ namespace Unilife.Controllers
 
             return View(evento);
         }
+        [Authorize(Roles = "Coordinador")]
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -91,6 +99,7 @@ namespace Unilife.Controllers
 
             return View(evento);
         }
+        [Authorize(Roles = "Coordinador")]
 
         public async Task<IActionResult> Delete(int? id)
         {
@@ -103,6 +112,7 @@ namespace Unilife.Controllers
             return View(evento);
         }
 
+        [Authorize(Roles = "Coordinador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

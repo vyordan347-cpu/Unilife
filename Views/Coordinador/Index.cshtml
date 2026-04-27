@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "Panel Coordinador";
+}
+
+<h1>Panel Coordinador</h1>
+
+<p>Bienvenido al panel de administración de UniLife.</p>
+
+<div class="list-group mt-4">
+    <a asp-controller="Cursos" asp-action="Index" class="list-group-item list-group-item-action">
+        Gestionar cursos
+    </a>
+
+    <a asp-controller="Eventos" asp-action="Index" class="list-group-item list-group-item-action">
+        Gestionar eventos
+    </a>
+
+    <a asp-controller="Lugares" asp-action="Index" class="list-group-item list-group-item-action">
+        Gestionar lugares recomendados
+    </a>
+</div>

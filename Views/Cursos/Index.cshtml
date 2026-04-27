@@ -6,10 +6,12 @@
 
 <h1>Cursos</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Crear nuevo curso</a>
-</p>
-
+@if (User.IsInRole("Coordinador"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Crear nuevo curso</a>
+    </p>
+}
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -33,9 +35,16 @@
             <td>@curso.HoraInicio - @curso.HoraFin</td>
             <td>@curso.CodigoAula</td>
             <td>
-                <a asp-action="Details" asp-route-id="@curso.Id">Detalles</a> |
-                <a asp-action="Edit" asp-route-id="@curso.Id">Editar</a> |
-                <a asp-action="Delete" asp-route-id="@curso.Id">Eliminar</a>
+                <a asp-action="Details" asp-route-id="@curso.Id">Detalles</a>
+
+                @if (User.IsInRole("Coordinador"))
+                {
+                    <text> | </text>
+                    <a asp-action="Edit" asp-route-id="@curso.Id">Editar</a>
+
+                    <text> | </text>
+                    <a asp-action="Delete" asp-route-id="@curso.Id">Eliminar</a>
+                }
             </td>
         </tr>
 }
