@@ -1,3 +1,6 @@
+![.NET](https://img.shields.io/badge/.NET-8-blue)
+![Render](https://img.shields.io/badge/Deploy-Render-green)
+![Status](https://img.shields.io/badge/Status-MVP-orange)
 UniLife
 
 Sistema web desarrollado con ASP.NET Core MVC para la gestión de la vida universitaria.
