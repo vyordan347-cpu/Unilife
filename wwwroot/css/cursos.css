@@ -1,0 +1,89 @@
+.cursos-page {
+    padding: 30px;
+    background: #eef4fb;
+    min-height: 100vh;
+}
+
+.cursos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.cursos-header h1 {
+    font-weight: 800;
+}
+
+.btn-crear {
+    background: #a50021;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.btn-crear:hover {
+    background: #7c0018;
+}
+
+.cursos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.curso-card {
+    background: white;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: 0.2s;
+}
+
+.curso-card:hover {
+    transform: translateY(-4px);
+}
+
+.curso-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.curso-info {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 5px;
+}
+
+.curso-footer {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-detalle {
+    background: #e11d48;
+    color: white;
+    border-radius: 10px;
+    padding: 6px 12px;
+    text-decoration: none;
+}
+
+.btn-edit {
+    background: #facc15;
+    color: black;
+    border-radius: 10px;
+    padding: 6px 12px;
+    text-decoration: none;
+}
+
+.btn-delete {
+    background: #ef4444;
+    color: white;
+    border-radius: 10px;
+    padding: 6px 12px;
+    text-decoration: none;
+}

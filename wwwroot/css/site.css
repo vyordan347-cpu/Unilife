@@ -7,7 +7,7 @@ body {
 .app-page {
     min-height: 100vh;
     display: flex;
-    background-image: linear-gradient(rgba(235, 244, 255, 0.75), rgba(235, 244, 255, 0.75)), url("PEGA_AQUI_TU_URL_DE_FONDO");
+    background-image: linear-gradient(rgba(235, 244, 255, 0.75), rgba(235, 244, 255, 0.75)), url("https://filialsur.usmp.edu.pe/wp-content/uploads/2024/03/Bienvenida_USMP-FS-2024.jpg");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

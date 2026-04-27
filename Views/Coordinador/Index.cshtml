@@ -1,21 +1,39 @@
-@{
-    ViewData["Title"] = "Panel Coordinador";
-}
+<link rel="stylesheet" href="~/css/coordinador.css" asp-append-version="true" />
 
-<h1>Panel Coordinador</h1>
+<div class="coordinador-page">
 
-<p>Bienvenido al panel de administración de UniLife.</p>
+    <div class="coordinador-header">
+        <h1>Panel Coordinador</h1>
+        <p>Bienvenido al centro de administración de UniLife.</p>
+    </div>
 
-<div class="list-group mt-4">
-    <a asp-controller="Cursos" asp-action="Index" class="list-group-item list-group-item-action">
-        Gestionar cursos
-    </a>
+    <div class="coordinador-grid">
 
-    <a asp-controller="Eventos" asp-action="Index" class="list-group-item list-group-item-action">
-        Gestionar eventos
-    </a>
+        <a asp-controller="Cursos" asp-action="Index" class="coordinador-card">
+            <div class="card-icon">📚</div>
+            <h3>Gestionar cursos</h3>
+            <p>Crea, edita y organiza cursos, horarios y aulas.</p>
+        </a>
 
-    <a asp-controller="Lugares" asp-action="Index" class="list-group-item list-group-item-action">
-        Gestionar lugares recomendados
-    </a>
+        <a asp-controller="Eventos" asp-action="Index" class="coordinador-card">
+            <div class="card-icon">📅</div>
+            <h3>Gestionar eventos</h3>
+            <p>Administra talleres, charlas, hackathones y eventos generales.</p>
+        </a>
+
+        <a asp-controller="Lugares" asp-action="Index" class="coordinador-card">
+            <div class="card-icon">📍</div>
+            <h3>Gestionar lugares</h3>
+            <p>Registra restaurantes, cafeterías, bibliotecas y zonas recomendadas.</p>
+        </a>
+
+    </div>
+
+    <div class="logout-box">
+        <form asp-controller="Account" asp-action="Logout" method="post">
+            <button type="submit" class="btn btn-outline-danger">
+                Cerrar sesión
+            </button>
+        </form>
+    </div>
 </div>

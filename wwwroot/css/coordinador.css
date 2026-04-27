@@ -1,0 +1,79 @@
+.coordinador-page {
+    min-height: 100vh;
+    background: #eef4fb;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 40px;
+}
+
+.coordinador-header {
+    background: linear-gradient(135deg, #9f0b24, #c8102e);
+    color: white;
+    border-radius: 24px;
+    padding: 35px;
+    margin-bottom: 30px;
+    box-shadow: 0 12px 30px rgba(159, 11, 36, 0.25);
+}
+
+.coordinador-header h1 {
+    font-size: 38px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.coordinador-header p {
+    margin: 8px 0 0;
+    opacity: 0.9;
+}
+
+.coordinador-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.coordinador-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px;
+    text-decoration: none;
+    color: #1f2937;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+}
+
+.coordinador-card:hover {
+    transform: translateY(-4px);
+    color: #1f2937;
+}
+
+.card-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    background: #fff1f2;
+    color: #9f0b24;
+    margin-bottom: 18px;
+}
+
+.coordinador-card h3 {
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.coordinador-card p {
+    color: #64748b;
+    margin: 0;
+}
+
+.logout-box {
+    margin-top: 30px;
+}
+
+@media (max-width: 900px) {
+    .coordinador-grid {
+        grid-template-columns: 1fr;
+    }
+}
