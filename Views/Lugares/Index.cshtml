@@ -9,10 +9,16 @@
         <div class="logo-unilife">🛡 UniLife</div>
 
         <a class="menu-link" asp-controller="Home" asp-action="Index">⌂ Inicio</a>
-        <a class="menu-link" href="#">☑ Tareas</a>
+        <a class="menu-link" asp-controller="Cursos" asp-action="Index">☑ Cursos</a>
         <a class="menu-link active" asp-controller="Lugares" asp-action="Index">⌖ Lugares</a>
         <a class="menu-link" asp-controller="Eventos" asp-action="Index">▣ Eventos</a>
         <a class="menu-link" href="#">♙ Perfil</a>
+
+        <div class="sidebar-card">
+            <strong>¡Sigue así!</strong>
+            <br />
+            Explora nuevos lugares cerca de ti.
+        </div>
     </aside>
 
     <main class="content-unilife">
@@ -35,18 +41,9 @@
             {
                 string icono = "☕";
 
-                if (item.Tipo == "Restaurante")
-                {
-                    icono = "🍴";
-                }
-                else if (item.Tipo == "Biblioteca")
-                {
-                    icono = "📖";
-                }
-                else if (item.Tipo == "Coworking")
-                {
-                    icono = "💻";
-                }
+                if (item.Tipo == "Restaurante") icono = "🍴";
+                else if (item.Tipo == "Biblioteca") icono = "📖";
+                else if (item.Tipo == "Coworking") icono = "💻";
 
                 <div class="col-md-4">
                     <div class="place-card">
@@ -65,15 +62,23 @@
 
                         <div class="d-flex gap-2 mt-3">
                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm w-100">Ver</a>
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm w-100">Editar</a>
+
+                            @if (User.IsInRole("Coordinador"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning btn-sm w-100">Editar</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm w-100">Eliminar</a>
+                            }
                         </div>
                     </div>
                 </div>
             }
         </div>
 
-        <div class="mt-4">
-            <a asp-action="Create" class="btn btn-danger px-4">+ Crear lugar</a>
-        </div>
+        @if (User.IsInRole("Coordinador"))
+        {
+            <div class="mt-4">
+                <a asp-action="Create" class="btn btn-danger px-4">+ Crear lugar</a>
+            </div>
+        }
     </main>
 </div>

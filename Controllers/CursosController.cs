@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Unilife.Data;
@@ -5,6 +6,7 @@ using Unilife.Models;
 
 namespace Unilife.Controllers
 {
+    [Authorize]
     public class CursosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -32,6 +34,7 @@ namespace Unilife.Controllers
             return View(curso);
         }
 
+        [Authorize(Roles = "Coordinador")]
         public IActionResult Create()
         {
             return View();
@@ -39,6 +42,7 @@ namespace Unilife.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Coordinador")]
         public async Task<IActionResult> Create(Curso curso)
         {
             if (ModelState.IsValid)
@@ -52,6 +56,7 @@ namespace Unilife.Controllers
             return View(curso);
         }
 
+        [Authorize(Roles = "Coordinador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -65,6 +70,7 @@ namespace Unilife.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Coordinador")]
         public async Task<IActionResult> Edit(int id, Curso curso)
         {
             if (id != curso.Id) return NotFound();
@@ -91,6 +97,7 @@ namespace Unilife.Controllers
             return View(curso);
         }
 
+        [Authorize(Roles = "Coordinador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -105,6 +112,7 @@ namespace Unilife.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Coordinador")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var curso = await _context.Cursos.FindAsync(id);

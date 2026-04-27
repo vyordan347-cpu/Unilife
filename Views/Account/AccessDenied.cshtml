@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "Acceso denegado";
+}
+
+<div class="text-center mt-5">
+    <h1>Acceso denegado</h1>
+    <p>No tienes permisos para acceder a esta sección.</p>
+
+    @if (User.IsInRole("Coordinador"))
+    {
+        <a asp-controller="Coordinador" asp-action="Index" class="btn btn-primary">Volver a mi panel</a>
+    }
+    else if (User.IsInRole("Docente"))
+    {
+        <a asp-controller="Docente" asp-action="Index" class="btn btn-primary">Volver a mi panel</a>
+    }
+    else if (User.IsInRole("Alumno"))
+    {
+        <a asp-controller="Alumno" asp-action="Index" class="btn btn-primary">Volver a mi panel</a>
+    }
+</div>
