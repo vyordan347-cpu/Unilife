@@ -4,49 +4,55 @@
     ViewData["Title"] = "Cursos";
 }
 
-<h1>Cursos</h1>
+<link rel="stylesheet" href="~/css/cursos.css" asp-append-version="true" />
 
-@if (User.IsInRole("Coordinador"))
-{
-    <p>
-        <a asp-action="Create" class="btn btn-primary">Crear nuevo curso</a>
-    </p>
-}
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Carrera</th>
-            <th>Semestre</th>
-            <th>Docente</th>
-            <th>Horario</th>
-            <th>Aula</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var curso in Model)
-{
-        <tr>
-            <td>@curso.Nombre</td>
-            <td>@curso.Carrera</td>
-            <td>@curso.Semestre</td>
-            <td>@curso.Docente</td>
-            <td>@curso.HoraInicio - @curso.HoraFin</td>
-            <td>@curso.CodigoAula</td>
-            <td>
-                <a asp-action="Details" asp-route-id="@curso.Id">Detalles</a>
+<div class="cursos-page">
 
-                @if (User.IsInRole("Coordinador"))
-                {
-                    <text> | </text>
-                    <a asp-action="Edit" asp-route-id="@curso.Id">Editar</a>
+    <div class="cursos-header">
+        <h1>Cursos</h1>
 
-                    <text> | </text>
-                    <a asp-action="Delete" asp-route-id="@curso.Id">Eliminar</a>
-                }
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        @if (User.IsInRole("Coordinador"))
+        {
+            <a asp-action="Create" class="btn-crear">+ Crear curso</a>
+        }
+    </div>
+
+    <div class="cursos-grid">
+
+        @foreach (var curso in Model)
+        {
+            <div class="curso-card">
+
+                <div class="curso-title">@curso.Nombre</div>
+
+                <div class="curso-info">Carrera: @curso.Carrera</div>
+                <div class="curso-info">Semestre: @curso.Semestre</div>
+                <div class="curso-info">Docente: @curso.Docente</div>
+                <div class="curso-info">Horario: @curso.HoraInicio - @curso.HoraFin</div>
+                <div class="curso-info">Aula: @curso.CodigoAula</div>
+
+                <div class="curso-footer">
+
+                    <a asp-action="Details" asp-route-id="@curso.Id" class="btn-detalle">
+                        Detalles
+                    </a>
+
+                    @if (User.IsInRole("Coordinador"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@curso.Id" class="btn-edit">
+                            Editar
+                        </a>
+
+                        <a asp-action="Delete" asp-route-id="@curso.Id" class="btn-delete">
+                            Eliminar
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>
