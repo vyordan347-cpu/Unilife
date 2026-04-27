@@ -2,44 +2,92 @@
 
 @{
     ViewData["Title"] = "Iniciar sesión";
+    Layout = null;
 }
 
-<div class="row justify-content-center mt-5">
-    <div class="col-md-4">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h2 class="text-center mb-4">UniLife</h2>
-                <h5 class="text-center mb-4">Iniciar sesión</h5>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - UniLife</title>
 
-                <form asp-action="Login" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+</head>
 
-                    <div class="mb-3">
-                        <label asp-for="Email" class="form-label"></label>
-                        <input asp-for="Email" class="form-control" placeholder="correo@universidad.edu" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
+<body class="login-page">
+
+    <div class="login-container">
+
+        <div class="login-logo">
+            <img src="/img/logo-unilife.png.png" alt="UniLife" />
+        </div>
+
+        <h1 class="login-title">UniLife</h1>
+        <p class="login-subtitle">Tu compañero universitario completo</p>
+
+        <div class="login-card">
+            <h2>Iniciar sesión</h2>
+
+            <form asp-action="Login" method="post">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Correo electrónico</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">✉</span>
+                        <input asp-for="Email" class="form-control login-input" placeholder="correo@usmp.pe" />
                     </div>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
 
-                    <div class="mb-3">
-                        <label asp-for="Password" class="form-label">Contraseña</label>
-                        <input asp-for="Password" class="form-control" placeholder="Ingrese su contraseña" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label">Contraseña</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input asp-for="Password" class="form-control login-input" placeholder="••••••••" />
                     </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
 
-                    <div class="form-check mb-3">
-                        <input asp-for="RememberMe" class="form-check-input" />
-                        <label asp-for="RememberMe" class="form-check-label"></label>
-                    </div>
+                <button type="submit" class="btn-login">
+                    Iniciar sesión
+                </button>
 
-                    <button type="submit" class="btn btn-primary w-100">
-                        Ingresar
-                    </button>
-                </form>
+            </form>
+
+            <div class="login-register">
+                <a href="#">¿No tienes cuenta? Crear cuenta</a>
             </div>
         </div>
-    </div>
-</div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+        <div class="login-footer">
+            Al continuar, aceptas nuestros términos y condiciones
+        </div>
+
+        <div class="login-web">
+            usmp.pe
+        </div>
+
+        <div class="social-icons">
+            <span>f</span>
+            <span>◎</span>
+            <span>𝕏</span>
+            <span>in</span>
+            <span>▶</span>
+        </div>
+    </div>
+
+    <div class="help-btn">?</div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+</body>
+</html>
