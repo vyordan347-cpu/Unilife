@@ -71,13 +71,13 @@ Contraseña: Admin123*
 
 ## Variables de entorno (Render)
 
-
+```
 ASPNETCORE_ENVIRONMENT=Production
 ASPNETCORE_URLS=http://0.0.0.0:8080
 
 ConnectionStrings__DefaultConnection=Data Source=app.db
 Redis__ConnectionString=red-d719v6t7vvec73e4c7ig:6379
-
+```
 
 ---
 
