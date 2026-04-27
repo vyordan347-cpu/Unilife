@@ -14,18 +14,27 @@ namespace Unilife.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string tipo)
+        public async Task<IActionResult> Index(string tipo, string buscar)
         {
             var lugares = _context.Lugares.AsQueryable();
 
-            if (!string.IsNullOrEmpty(tipo))
+            if (!string.IsNullOrWhiteSpace(tipo))
             {
                 lugares = lugares.Where(l => l.Tipo == tipo);
             }
 
-            ViewBag.Tipo = tipo;
+            if (!string.IsNullOrWhiteSpace(buscar))
+            {
+                lugares = lugares.Where(l =>
+                    l.Nombre.Contains(buscar) ||
+                    l.Direccion.Contains(buscar) ||
+                    l.Descripcion.Contains(buscar));
+            }
 
-            return View(await lugares.OrderBy(l => l.Nombre).ToListAsync());
+            ViewBag.Tipo = tipo;
+            ViewBag.Buscar = buscar;
+
+            return View(await lugares.OrderByDescending(l => l.Calificacion).ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -45,17 +54,19 @@ namespace Unilife.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Lugar lugar)
         {
-            if (ModelState.IsValid)
+            ModelState.Remove("Id");
+
+            if (!ModelState.IsValid)
             {
-                _context.Add(lugar);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(lugar);
             }
 
-            return View(lugar);
+            _context.Lugares.Add(lugar);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -70,19 +81,21 @@ namespace Unilife.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Lugar lugar)
         {
             if (id != lugar.Id) return NotFound();
 
-            if (ModelState.IsValid)
+            ModelState.Remove("Id");
+
+            if (!ModelState.IsValid)
             {
-                _context.Update(lugar);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(lugar);
             }
 
-            return View(lugar);
+            _context.Lugares.Update(lugar);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -97,7 +110,6 @@ namespace Unilife.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var lugar = await _context.Lugares.FindAsync(id);
