@@ -1,93 +1,126 @@
-UniLife 1.0
+UniLife
 
-Sistema web universitario desarrollado con ASP.NET Core MVC orientado a centralizar la gestión de la vida académica del estudiante.
+Sistema web desarrollado con ASP.NET Core MVC para la gestión de la vida universitaria, incluyendo cursos, eventos y lugares recomendados.
 
-Descripción
+URL del sistema
 
-UniLife es una plataforma web que permite gestionar de manera integrada:
+(Aquí colocas tu link de Render)
 
-Cursos académicos
-Eventos universitarios
-Lugares recomendados cercanos
+Repositorio
 
-Esta versión corresponde a un MVP (Minimum Viable Product) enfocado en la gestión básica y el control de acceso mediante roles.
+https://github.com/vyordan347-cpu/Unilife
 
 Tecnologías utilizadas
+
 ASP.NET Core MVC (.NET 8)
 Entity Framework Core
 SQLite
-ASP.NET Identity (autenticación y gestión de roles)
-Bootstrap y CSS personalizado
-GitHub (control de versiones)
-Render (despliegue)
-Redis (cache distribuido)
-Roles del sistema
+Identity (autenticación y roles)
+Razor Views
+Bootstrap + CSS personalizado
+Redis (Render KeyValue)
+Docker
+Render (deploy)
+
+Funcionalidades
+Autenticación
+
+Inicio de sesión con ASP.NET Identity
+Control de acceso por roles
+Protección de controladores con [Authorize]
+
 Coordinador
-Gestión de cursos (CRUD)
-Gestión de eventos (CRUD)
-Gestión de lugares recomendados (CRUD)
-Alumno (en desarrollo)
+
+Panel exclusivo para el rol "Coordinador"
+
+Gestión de cursos
+
+Crear cursos
+Editar cursos
+Eliminar cursos
+Visualizar cursos
+
+Gestión de eventos
+
+Crear eventos
+Editar eventos
+Eliminar eventos
+Filtro por tipo
+
+Gestión de lugares recomendados
+
+Crear lugares
+Editar lugares
+Eliminar lugares
+Filtro por tipo
+
+Validaciones implementadas
+
+Generación automática de código de aula
+Restricción de acceso a funciones según rol
+Usuario (vista general)
+
 Visualización de cursos
 Visualización de eventos
-Visualización de lugares
-Docente (en desarrollo)
-Gestión de contenido académico (próximamente)
-Funcionalidades implementadas
-Autenticación
-Inicio de sesión con ASP.NET Identity
-Control de acceso basado en roles
-Protección de controladores mediante [Authorize]
-Cursos
-Crear, listar, editar y eliminar cursos
-Visualización en formato de tarjetas (cards)
-Eventos
-Crear, listar, editar y eliminar eventos
-Filtro por tipo de evento
-Lugares recomendados
-Crear, listar, editar y eliminar lugares
-Filtro por tipo
-Interfaz de usuario
-Diseño personalizado del módulo de autenticación (Login) basado en Figma
+Visualización de lugares recomendados
+
+Control visual de interfaz
+
+Ocultamiento de botones según rol
+Acceso restringido a funcionalidades administrativas
+UI / UX
+
+Diseño personalizado del Login basado en Figma
 Panel de Coordinador mejorado
-Visualización de información en formato de tarjetas
-Control visual por roles (elementos ocultos según permisos)
-Base de datos
+Visualización de cursos en formato de tarjetas
+Interfaz moderna y responsiva
+Separación de estilos por módulos (login, cursos, panel)
 
-Se utiliza SQLite como motor de base de datos para esta versión:
+Credenciales de prueba
 
-Data Source=app.db
-Ejecución del proyecto
-Clonar repositorio
-git clone https://github.com/TU-USUARIO/Unilife.git
-cd Unilife
-Ejecutar la aplicación
-dotnet build
-dotnet run
-Usuario de prueba
 Correo: coordinador@unilife.com
+
 Contraseña: Admin123*
-Rol: Coordinador
-Despliegue
 
-Aplicación desplegada en Render:
+Pruebas realizadas
 
-(Colocar aquí la URL del sistema)
+Inicio de sesión correcto
+Control de acceso por roles
+CRUD completo de cursos
+CRUD completo de eventos
+CRUD completo de lugares
+Validación de permisos por rol
+Interfaz adaptada según tipo de usuario
+
+Despliegue en Render
+
+La aplicación se encuentra desplegada en Render utilizando Docker.
 
 Variables de entorno (Render)
-ASPNETCORE_ENVIRONMENT=Production
-ASPNETCORE_URLS=http://0.0.0.0:8080
-ConnectionStrings__DefaultConnection=Data Source=app.db
-Redis__ConnectionString=red-xxxx:6379
-Limitaciones de la versión 1.0
-No existe registro de usuarios desde la interfaz
-Roles asignados manualmente mediante SeedData
-Módulos de alumno y docente en desarrollo
-No se incluye carga de archivos
-No se cuenta con panel analítico avanzado
-Próximas mejoras
-Implementación completa de roles (Alumno y Docente)
-Gestión de tareas y entregas
-Paneles personalizados por rol
-Sistema de notificaciones
-Dashboard con métricas
-Mejora de seguridad y validaciones
+ASPNETCORE_ENVIRONMENT=Production  
+ASPNETCORE_URLS=http://0.0.0.0:8080  
+ConnectionStrings__DefaultConnection=Data Source=app.db  
+Redis__ConnectionString=red-xxxx:6379  
+Explicación de variables
+
+ASPNETCORE_ENVIRONMENT → Define el entorno de ejecución
+ASPNETCORE_URLS → Puerto requerido por Render
+ConnectionStrings__DefaultConnection → Base de datos SQLite
+Redis__ConnectionString → Conexión a Redis (KeyValue)
+
+Redis
+
+En desarrollo local: uso de memoria (DistributedMemoryCache)
+En producción: uso de Redis (Render KeyValue)
+
+Docker
+
+El despliegue se realiza mediante un Dockerfile ubicado en la raíz del proyecto.
+
+Notas finales
+
+El sistema cumple con las funcionalidades principales del caso propuesto
+Se implementó correctamente el patrón MVC
+Se integró autenticación, roles y control de acceso
+Se mejoró la experiencia de usuario mediante diseño personalizado
+Se realizó despliegue en producción utilizando Docker y Render
