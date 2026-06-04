@@ -21,5 +21,8 @@ namespace Unilife.Models
         public string Prioridad { get; set; } = string.Empty;
 
         public bool Completada { get; set; }
+
+        // Dueño de la tarea (el alumno que la creó)
+        public string? UsuarioId { get; set; }
     }
 }
