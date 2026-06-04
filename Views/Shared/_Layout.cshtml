@@ -10,14 +10,50 @@
     <link rel="stylesheet" href="~/Unilife.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-
 <body>
-    @RenderBody()
+    @{
+        var controlador = ViewContext.RouteData.Values["controller"]?.ToString();
+        string Activo(string c) => controlador == c ? "active" : "";
+    }
+
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        <div class="app-page">
+            <aside class="sidebar-unilife">
+                <div class="logo-unilife">🛡 UniLife</div>
+
+                <a class="menu-link @Activo("Home")" asp-controller="Home" asp-action="Index">⌂ Inicio</a>
+                <a class="menu-link @Activo("Cursos")" asp-controller="Cursos" asp-action="Index">☑ Cursos</a>
+                <a class="menu-link @Activo("Lugares")" asp-controller="Lugares" asp-action="Index">⌖ Lugares</a>
+                <a class="menu-link @Activo("Eventos")" asp-controller="Eventos" asp-action="Index">▣ Eventos</a>
+                <a class="menu-link @Activo("Account")" asp-controller="Account" asp-action="Perfil">♙ Perfil</a>
+
+                <div class="sidebar-card">
+                    <strong>¡Sigue así!</strong><br />
+                    Has completado tus actividades esta semana.
+                </div>
+
+                <form asp-controller="Account" asp-action="Logout" method="post">
+                    <button type="submit" class="menu-link"
+                            style="background:none;border:none;width:100%;text-align:left;cursor:pointer;">
+                        ⎋ Cerrar sesión
+                    </button>
+                </form>
+            </aside>
+
+            <main class="content-unilife">
+                @RenderBody()
+            </main>
+        </div>
+    }
+    else
+    {
+        @RenderBody()
+    }
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
