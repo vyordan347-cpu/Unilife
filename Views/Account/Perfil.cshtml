@@ -1,0 +1,44 @@
+@model Unilife.Models.PerfilViewModel
+
+@{
+    ViewData["Title"] = "Mi perfil";
+}
+
+<link rel="stylesheet" href="~/css/coordinador.css" asp-append-version="true" />
+
+<div class="coordinador-page">
+
+    <div class="coordinador-header">
+        <h1>Mi perfil</h1>
+        <p>Información de tu cuenta en UniLife.</p>
+    </div>
+
+    <div class="card shadow-sm mx-auto" style="max-width: 480px;">
+        <div class="card-body">
+
+            <div class="text-center mb-4">
+                <div style="font-size: 4rem;">👤</div>
+                <h3 class="mb-1">@Model.Nombre @Model.Apellido</h3>
+                <span class="badge bg-primary">@Model.Rol</span>
+            </div>
+
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item d-flex justify-content-between">
+                    <strong>Correo</strong> <span>@Model.Email</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <strong>Carrera</strong>
+                    <span>@(string.IsNullOrEmpty(Model.Carrera) ? "No registrada" : Model.Carrera)</span>
+                </li>
+            </ul>
+
+            <div class="d-flex gap-2">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary w-100">Volver al inicio</a>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="w-100">
+                    <button type="submit" class="btn btn-outline-danger w-100">Cerrar sesión</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

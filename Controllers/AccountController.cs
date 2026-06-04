@@ -86,5 +86,29 @@ namespace Unilife.Controllers
         {
             return View();
         }
+        [HttpGet]
+[Authorize]
+public async Task<IActionResult> Perfil()
+{
+    var usuario = await _userManager.GetUserAsync(User);
+
+    if (usuario == null)
+    {
+        return RedirectToAction("Login");
+    }
+
+    var roles = await _userManager.GetRolesAsync(usuario);
+
+    var modelo = new PerfilViewModel
+    {
+        Nombre = usuario.Nombre,
+        Apellido = usuario.Apellido,
+        Email = usuario.Email ?? string.Empty,
+        Carrera = usuario.Carrera,
+        Rol = roles.FirstOrDefault() ?? "Sin rol"
+    };
+
+    return View(modelo);
+}
     }
 }
