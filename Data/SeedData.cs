@@ -20,24 +20,35 @@ namespace Unilife.Data
                 }
             }
 
-            // Crear usuario coordinador
-            var email = "coordinador@unilife.com";
-
-            var usuario = await userManager.FindByEmailAsync(email);
-
-            if (usuario == null)
+            // Método auxiliar para no repetir código
+            async Task CrearUsuarioAsync(
+                string email, string password, string rol,
+                string nombre, string apellido, string? carrera = null)
             {
-                usuario = new ApplicationUser
+                if (await userManager.FindByEmailAsync(email) == null)
                 {
-                    UserName = email,
-                    Email = email,
-                    Nombre = "Admin",
-                    Apellido = "UniLife"
-                };
+                    var usuario = new ApplicationUser
+                    {
+                        UserName = email,
+                        Email = email,
+                        EmailConfirmed = true,
+                        Nombre = nombre,
+                        Apellido = apellido,
+                        Carrera = carrera
+                    };
 
-                await userManager.CreateAsync(usuario, "Admin123*");
-                await userManager.AddToRoleAsync(usuario, "Coordinador");
+                    var resultado = await userManager.CreateAsync(usuario, password);
+
+                    if (resultado.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(usuario, rol);
+                    }
+                }
             }
+
+            await CrearUsuarioAsync("coordinador@unilife.com", "Admin123*", "Coordinador", "Admin", "UniLife");
+            await CrearUsuarioAsync("docente@unilife.com", "Docente123*", "Docente", "Juan", "Pérez");
+            await CrearUsuarioAsync("alumno@unilife.com", "Alumno123*", "Alumno", "María", "García", "Ingeniería de Software");
         }
     }
 }
