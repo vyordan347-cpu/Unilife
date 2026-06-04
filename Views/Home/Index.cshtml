@@ -1,47 +1,159 @@
-﻿@{
+﻿@model Unilife.Models.DashboardViewModel
+
+@{
     ViewData["Title"] = "Inicio";
+
+    var cultura = new System.Globalization.CultureInfo("es-ES");
+    var fecha = DateTime.Now.ToString("dddd, dd 'de' MMMM, yyyy", cultura);
+    fecha = char.ToUpper(fecha[0]) + fecha.Substring(1);
 }
 
-<link rel="stylesheet" href="~/css/coordinador.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/inicio.css" asp-append-version="true" />
 
-<div class="coordinador-page">
+<div class="inicio-dash">
 
-    <div class="coordinador-header">
-        <h1>Bienvenido a UniLife</h1>
-        <p>Tu compañero universitario: cursos, eventos y lugares en un solo lugar.</p>
+    <!-- Saludo + chip universidad -->
+    <div class="inicio-topbar">
+        <div class="inicio-saludo">
+            <h1>Hola, @Model.Nombre 👋</h1>
+            <p>@fecha</p>
+        </div>
+
+        <div class="usmp-pill">
+            <span class="usmp-brand">🛡 USMP</span>
+            <span class="usmp-menu">☰ Menú</span>
+        </div>
     </div>
 
-    <div class="coordinador-grid">
+    <!-- Estadísticas reales -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-icon icon-pink">✓</div>
+            <div>
+                <div class="stat-number">@Model.Completadas</div>
+                <div class="stat-label">Completadas</div>
+            </div>
+        </div>
 
-        <a asp-controller="Cursos" asp-action="Index" class="coordinador-card">
-            <div class="card-icon">📚</div>
-            <h3>Cursos</h3>
-            <p>Consulta cursos, horarios y aulas.</p>
-        </a>
+        <div class="stat-card">
+            <div class="stat-icon icon-amber">📌</div>
+            <div>
+                <div class="stat-number">@Model.Pendientes</div>
+                <div class="stat-label">Pendientes</div>
+            </div>
+        </div>
 
-        <a asp-controller="Eventos" asp-action="Index" class="coordinador-card">
-            <div class="card-icon">📅</div>
-            <h3>Eventos</h3>
-            <p>Talleres, charlas, hackathones y más.</p>
-        </a>
+        <div class="stat-card">
+            <div class="stat-icon icon-orange">📅</div>
+            <div>
+                <div class="stat-number">@Model.EventosProximos</div>
+                <div class="stat-label">Eventos próximos</div>
+            </div>
+        </div>
 
-        <a asp-controller="Lugares" asp-action="Index" class="coordinador-card">
-            <div class="card-icon">📍</div>
-            <h3>Lugares</h3>
-            <p>Restaurantes, cafeterías y bibliotecas cercanas.</p>
-        </a>
-
-        <a asp-controller="Account" asp-action="Perfil" class="coordinador-card">
-            <div class="card-icon">👤</div>
-            <h3>Mi perfil</h3>
-            <p>Revisa los datos de tu cuenta.</p>
-        </a>
-
+        <div class="stat-card">
+            <div class="progress-ring" style="background: conic-gradient(#a3001d @(Model.Progreso)%, #f0d6db 0);">
+                <span>@Model.Progreso%</span>
+            </div>
+            <div>
+                <div class="stat-number">@Model.Progreso%</div>
+                <div class="stat-label">Progreso</div>
+            </div>
+        </div>
     </div>
 
-    <div class="logout-box">
-        <form asp-controller="Account" asp-action="Logout" method="post">
-            <button type="submit" class="btn btn-outline-danger">Cerrar sesión</button>
-        </form>
+    <!-- Rejilla de 3 columnas -->
+    <div class="dash-grid">
+
+        <!-- Próximas tareas (reales) -->
+        <div class="dash-card">
+            <div class="dash-head">
+                <h3>🕒 Próximas tareas</h3>
+                <a asp-controller="Tareas" asp-action="Index" class="ver-todas">Ver todas</a>
+            </div>
+
+            @if (Model.ProximasTareas.Any())
+            {
+                foreach (var t in Model.ProximasTareas)
+                {
+                    string clase = t.Prioridad == "Alta" ? "item-yellow"
+                                 : t.Prioridad == "Media" ? "item-blue" : "item-green";
+
+                    <div class="item @clase">
+                        <div class="item-emoji">📄</div>
+                        <div>
+                            <div class="item-title">@t.Titulo</div>
+                            <div class="item-sub">@t.Curso · @t.FechaEntrega.ToString("dd MMM", cultura)</div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="item-sub">No tienes tareas pendientes. ¡Bien hecho!</p>
+            }
+        </div>
+
+        <!-- Horario (cursos reales) -->
+        <div class="dash-card">
+            <div class="dash-head">
+                <h3>📖 Horario</h3>
+            </div>
+
+            @if (Model.Horario.Any())
+            {
+                foreach (var c in Model.Horario)
+                {
+                    <div class="item item-purple">
+                        <span class="hora-chip">@c.HoraInicio.ToString(@"hh\:mm")</span>
+                        <div class="item-emoji">📘</div>
+                        <div>
+                            <div class="item-title">@c.Nombre</div>
+                            <div class="item-sub">Aula @c.Aula · @c.Docente</div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="item-sub">Aún no hay cursos registrados.</p>
+            }
+        </div>
+
+        <!-- Recordatorios (eventos reales) -->
+        <div>
+            <div class="dash-card">
+                <div class="dash-head">
+                    <h3>🔔 Recordatorios</h3>
+                </div>
+
+                @if (Model.Recordatorios.Any())
+                {
+                    foreach (var e in Model.Recordatorios)
+                    {
+                        <div class="item item-blue">
+                            <div class="item-emoji">📅</div>
+                            <div>
+                                <div class="item-title">@e.Titulo</div>
+                                <div class="item-sub">@e.Fecha.ToString("dd MMM", cultura) · @e.Lugar</div>
+                                <span class="badge-pill badge-event">@e.TipoEvento</span>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="item-sub">No hay eventos próximos.</p>
+                }
+            </div>
+
+            <div class="dash-card reco-card">
+                <div class="reco-eyebrow">📍 Recomendación del día</div>
+                <h4>Técnica Pomodoro para estudiar</h4>
+                <p>Divide tu estudio en bloques de 25 minutos con descansos cortos.</p>
+                <a asp-controller="Eventos" asp-action="Index" class="btn-reco">Ver eventos</a>
+            </div>
+        </div>
+
     </div>
 </div>

@@ -42,28 +42,8 @@ namespace Unilife.Controllers
                 lockoutOnFailure: false
             );
 
-            if (resultado.Succeeded)
-            {
-                var usuario = await _userManager.FindByEmailAsync(model.Email);
-
-                if (usuario != null)
-                {
-                    if (await _userManager.IsInRoleAsync(usuario, "Coordinador"))
-                    {
-                        return RedirectToAction("Index", "Coordinador");
-                    }
-
-                    if (await _userManager.IsInRoleAsync(usuario, "Docente"))
-                    {
-                        return RedirectToAction("Index", "Docente");
-                    }
-
-                    if (await _userManager.IsInRoleAsync(usuario, "Alumno"))
-                    {
-                        return RedirectToAction("Index", "Alumno");
-                    }
-                }
-
+           if (resultado.Succeeded)
+            {       
                 return RedirectToAction("Index", "Home");
             }
 
