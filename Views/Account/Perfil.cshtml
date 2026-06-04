@@ -4,41 +4,92 @@
     ViewData["Title"] = "Mi perfil";
 }
 
-<link rel="stylesheet" href="~/css/coordinador.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/inicio.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/perfil.css" asp-append-version="true" />
 
-<div class="coordinador-page">
+<div class="perfil-page">
 
-    <div class="coordinador-header">
-        <h1>Mi perfil</h1>
-        <p>Información de tu cuenta en UniLife.</p>
+    <!-- Cabecera -->
+    <div class="perfil-header">
+        <div class="perfil-avatar">👤</div>
+        <div class="perfil-info">
+            <h1>@Model.Nombre @Model.Apellido</h1>
+            <div class="perfil-meta">✉️ @Model.Email</div>
+            <div class="perfil-meta">🎓 @(string.IsNullOrEmpty(Model.Carrera) ? "Carrera no registrada" : Model.Carrera) · @Model.Rol</div>
+        </div>
+        <div class="perfil-settings">⚙️</div>
     </div>
 
-    <div class="card shadow-sm mx-auto" style="max-width: 480px;">
-        <div class="card-body">
-
-            <div class="text-center mb-4">
-                <div style="font-size: 4rem;">👤</div>
-                <h3 class="mb-1">@Model.Nombre @Model.Apellido</h3>
-                <span class="badge bg-primary">@Model.Rol</span>
+    <!-- Estadísticas reales -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-icon icon-pink">✓</div>
+            <div>
+                <div class="stat-number">@Model.Completadas</div>
+                <div class="stat-label">Tareas completadas</div>
             </div>
+        </div>
 
-            <ul class="list-group list-group-flush mb-4">
-                <li class="list-group-item d-flex justify-content-between">
-                    <strong>Correo</strong> <span>@Model.Email</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <strong>Carrera</strong>
-                    <span>@(string.IsNullOrEmpty(Model.Carrera) ? "No registrada" : Model.Carrera)</span>
-                </li>
-            </ul>
-
-            <div class="d-flex gap-2">
-                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary w-100">Volver al inicio</a>
-                <form asp-controller="Account" asp-action="Logout" method="post" class="w-100">
-                    <button type="submit" class="btn btn-outline-danger w-100">Cerrar sesión</button>
-                </form>
+        <div class="stat-card">
+            <div class="stat-icon icon-amber">🏆</div>
+            <div>
+                <div class="stat-number">@Model.Puntos</div>
+                <div class="stat-label">Puntos totales</div>
             </div>
+        </div>
 
+        <div class="stat-card">
+            <div class="stat-icon icon-orange">📌</div>
+            <div>
+                <div class="stat-number">@Model.Pendientes</div>
+                <div class="stat-label">Pendientes</div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="progress-ring" style="background: conic-gradient(#a3001d @(Model.Progreso)%, #f0d6db 0);">
+                <span>@Model.Progreso%</span>
+            </div>
+            <div>
+                <div class="stat-number">@Model.Progreso%</div>
+                <div class="stat-label">Progreso</div>
+            </div>
         </div>
     </div>
+
+    <!-- Mis cursos -->
+    <div class="dash-card" style="margin-bottom:24px;">
+        <div class="dash-head"><h3>📖 Mis cursos</h3></div>
+
+        @if (Model.Cursos.Any())
+        {
+            <div class="cursos-grid">
+                @foreach (var curso in Model.Cursos)
+                {
+                    <div class="curso-chip">@curso</div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="item-sub">Aún no hay cursos registrados.</p>
+        }
+    </div>
+
+    <!-- Insignias y logros -->
+    <div class="dash-card">
+        <div class="dash-head"><h3>🏅 Insignias y logros</h3></div>
+
+        <div class="insignias-grid">
+            @foreach (var ins in Model.Insignias)
+            {
+                <div class="insignia-card @(ins.Desbloqueada ? "" : "locked")">
+                    <div class="insignia-emoji">@ins.Emoji</div>
+                    <h5>@ins.Titulo</h5>
+                    <p>@ins.Descripcion</p>
+                </div>
+            }
+        </div>
+    </div>
+
 </div>
