@@ -1,25 +1,39 @@
 @model Unilife.Models.Curso
 
 @{
-    ViewData["Title"] = "Detalles del curso";
+    ViewData["Title"] = "Detalle del curso";
 }
 
-<h1>@Model.Nombre</h1>
+<link rel="stylesheet" href="~/css/cursos.css" asp-append-version="true" />
 
-<div class="card">
-    <div class="card-body">
-        <p><strong>Descripción:</strong> @Model.Descripcion</p>
-        <p><strong>Carrera:</strong> @Model.Carrera</p>
-        <p><strong>Semestre:</strong> @Model.Semestre</p>
-        <p><strong>Docente:</strong> @Model.Docente</p>
-        <p><strong>Horario:</strong> @Model.HoraInicio - @Model.HoraFin</p>
-        <p><strong>Pabellón:</strong> @Model.Pabellon</p>
-        <p><strong>Aula:</strong> @Model.Aula</p>
-        <p><strong>Código de aula:</strong> @Model.CodigoAula</p>
+<h1 class="page-title">Detalle del curso</h1>
+<p class="page-subtitle">Información completa del curso</p>
+
+<div class="curso-card" style="max-width:600px;">
+
+    <div class="curso-card-top">
+        <div class="curso-icon">📘</div>
+        <div>
+            <div class="curso-title">@Model.Nombre</div>
+            <div class="curso-sub">@Model.Carrera · Semestre @Model.Semestre</div>
+        </div>
     </div>
+
+    <div class="curso-meta">
+        <div class="curso-info">📝 @Model.Descripcion</div>
+        <div class="curso-info">👨‍🏫 @Model.Docente</div>
+        <div class="curso-info">🕒 @Model.HoraInicio.ToString(@"hh\:mm") - @Model.HoraFin.ToString(@"hh\:mm")</div>
+        <div class="curso-info">🏛️ Pabellón @Model.Pabellon</div>
+        <div class="curso-info">📍 Aula @Model.Aula (@Model.CodigoAula)</div>
+    </div>
+
+    <div class="curso-footer">
+        <a asp-action="Index" class="btn btn-outline-secondary">← Volver</a>
+
+        @if (User.IsInRole("Coordinador"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-edit">Editar</a>
+        }
+    </div>
+
 </div>
-
-<br />
-
-<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
-<a asp-action="Index" class="btn btn-secondary">Volver</a>
