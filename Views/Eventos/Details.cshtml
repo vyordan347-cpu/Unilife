@@ -1,10 +1,47 @@
 @model Unilife.Models.Evento
 
-<h2>Detalle del Evento</h2>
+@{
+    ViewData["Title"] = "Detalle del evento";
 
-<p><b>Título:</b> @Model.Titulo</p>
-<p><b>Descripción:</b> @Model.Descripcion</p>
-<p><b>Fecha:</b> @Model.Fecha.ToShortDateString()</p>
-<p><b>Hora:</b> @Model.Hora</p>
-<p><b>Lugar:</b> @Model.Lugar</p>
-<p><b>Tipo:</b> @Model.TipoEvento</p>
+    var cultura = new System.Globalization.CultureInfo("es-ES");
+    var fecha = Model.Fecha.ToString("dddd, dd 'de' MMMM 'de' yyyy", cultura);
+    fecha = char.ToUpper(fecha[0]) + fecha.Substring(1);
+
+    string grad = Model.TipoEvento switch
+    {
+        "Hackathon" => "gradient-purple",
+        "Taller" => "gradient-orange",
+        "Concierto" => "gradient-pink",
+        _ => "gradient-red"
+    };
+}
+
+<h1 class="page-title">Detalle del evento</h1>
+<p class="page-subtitle">Información completa de la actividad</p>
+
+<div class="event-card" style="max-width:640px;">
+    <div class="event-header @grad">
+        <span>◇ @Model.TipoEvento</span>
+        <span>♡</span>
+    </div>
+
+    <div class="event-body">
+        <h5 class="event-title">@Model.Titulo</h5>
+        <p style="color:#475569; margin-bottom:18px;">@Model.Descripcion</p>
+
+        <div class="info-line">📅 @fecha</div>
+        <div class="info-line">🕒 @Model.Hora.ToString(@"hh\:mm")</div>
+        <div class="info-line">📍 @Model.Lugar</div>
+        <div class="info-line">🏷️ @Model.TipoEvento</div>
+
+        <div class="d-flex gap-2 mt-4 flex-wrap">
+            <a asp-action="Index" class="btn btn-outline-secondary">← Volver a eventos</a>
+
+            @if (User.IsInRole("Coordinador"))
+            {
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning">Editar</a>
+                <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Eliminar</a>
+            }
+        </div>
+    </div>
+</div>
