@@ -1,58 +1,75 @@
 @model Unilife.Models.Lugar
 
 @{
-    ViewData["Title"] = "Crear Lugar";
+    ViewData["Title"] = "Crear lugar";
 }
 
-<h2>Crear Lugar</h2>
+<link rel="stylesheet" href="~/css/inicio.css" asp-append-version="true" />
 
-<form asp-action="Create">
-    <div class="form-group">
-        <label>Nombre</label>
-        <input asp-for="Nombre" class="form-control" />
-    </div>
+<h1 class="page-title">Crear lugar</h1>
+<p class="page-subtitle">Agrega un nuevo sitio cercano al campus</p>
 
-    <div class="form-group">
-        <label>Tipo</label>
-        <select asp-for="Tipo" class="form-control">
-            <option value="Cafetería">Cafetería</option>
-            <option value="Restaurante">Restaurante</option>
-            <option value="Biblioteca">Biblioteca</option>
-            <option value="Coworking">Coworking</option>
-            <option value="Zona de estudio">Zona de estudio</option>
-        </select>
-    </div>
+<div class="dash-card" style="max-width:560px;">
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div class="form-group">
-        <label>Dirección</label>
-        <input asp-for="Direccion" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label asp-for="Nombre" class="form-label"></label>
+            <input asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label>Distancia</label>
-        <input asp-for="Distancia" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label asp-for="Tipo" class="form-label"></label>
+            <select asp-for="Tipo" class="form-select">
+                <option value="">-- Selecciona --</option>
+                <option value="Cafetería">Cafetería</option>
+                <option value="Restaurante">Restaurante</option>
+                <option value="Biblioteca">Biblioteca</option>
+                <option value="Coworking">Coworking</option>
+                <option value="Zona de estudio">Zona de estudio</option>
+            </select>
+            <span asp-validation-for="Tipo" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label>Precio promedio</label>
-        <input asp-for="PrecioPromedio" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label asp-for="Direccion" class="form-label"></label>
+            <input asp-for="Direccion" class="form-control" />
+            <span asp-validation-for="Direccion" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label>Calificación</label>
-        <input asp-for="Calificacion" class="form-control" />
-    </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label asp-for="Distancia" class="form-label">Distancia (km)</label>
+                <input asp-for="Distancia" class="form-control" type="number" step="0.1" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label asp-for="PrecioPromedio" class="form-label">Precio (S/)</label>
+                <input asp-for="PrecioPromedio" class="form-control" type="number" step="0.5" />
+            </div>
+            <div class="col-md-4 mb-3">
+                <label asp-for="Calificacion" class="form-label">Calificación</label>
+                <input asp-for="Calificacion" class="form-control" type="number" step="0.1" min="0" max="5" />
+            </div>
+        </div>
 
-    <div class="form-group">
-        <label>Descripción</label>
-        <textarea asp-for="Descripcion" class="form-control"></textarea>
-    </div>
+        <div class="mb-3">
+            <label asp-for="Descripcion" class="form-label"></label>
+            <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
+        </div>
 
-    <div class="form-group">
-        <label>Imagen URL</label>
-        <input asp-for="ImagenUrl" class="form-control" />
-    </div>
+        <div class="mb-3">
+            <label asp-for="ImagenUrl" class="form-label"></label>
+            <input asp-for="ImagenUrl" class="form-control" placeholder="Opcional" />
+        </div>
 
-    <br />
-    <button type="submit" class="btn btn-success">Guardar</button>
-</form>
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger px-4">Guardar</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

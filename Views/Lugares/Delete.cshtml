@@ -1,18 +1,29 @@
 @model Unilife.Models.Lugar
 
 @{
-    ViewData["Title"] = "Eliminar Lugar";
+    ViewData["Title"] = "Eliminar lugar";
 }
 
-<h2>Eliminar Lugar</h2>
+<link rel="stylesheet" href="~/css/inicio.css" asp-append-version="true" />
 
-<p>¿Seguro que deseas eliminar este lugar?</p>
+<h1 class="page-title">Eliminar lugar</h1>
+<p class="page-subtitle">Esta acción no se puede deshacer</p>
 
-<p><b>@Model.Nombre</b></p>
-<p>@Model.Tipo - @Model.Direccion</p>
+<div class="dash-card" style="max-width:520px;">
+    <p>¿Seguro que deseas eliminar este lugar?</p>
 
-<form asp-action="Delete">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Eliminar</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-</form>
+    <div class="item item-yellow mb-3">
+        <div>
+            <div class="item-title">@Model.Nombre</div>
+            <div class="item-sub">@Model.Tipo · @Model.Direccion</div>
+        </div>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger px-4">Sí, eliminar</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>

@@ -70,6 +70,18 @@ namespace Unilife.Data
                 await context.SaveChangesAsync();
             }
 
+            // ----- Lugares -----
+            if (!await context.Lugares.AnyAsync())
+            {
+                context.Lugares.AddRange(
+                    new Lugar { Nombre = "Cafetería Central", Tipo = "Cafetería", Direccion = "Av. Universitaria 123", Distancia = 0.2, PrecioPromedio = 8m, Calificacion = 4.6, Descripcion = "Café y snacks a pasos del campus.", ImagenUrl = "" },
+                    new Lugar { Nombre = "Biblioteca Municipal", Tipo = "Biblioteca", Direccion = "Jr. Lima 456", Distancia = 0.8, PrecioPromedio = 0m, Calificacion = 4.8, Descripcion = "Espacio silencioso para estudiar.", ImagenUrl = "" },
+                    new Lugar { Nombre = "Menú El Estudiante", Tipo = "Restaurante", Direccion = "Calle Real 789", Distancia = 0.5, PrecioPromedio = 12m, Calificacion = 4.3, Descripcion = "Almuerzos económicos cerca de la facultad.", ImagenUrl = "" },
+                    new Lugar { Nombre = "CoWork UNI", Tipo = "Coworking", Direccion = "Av. Grau 321", Distancia = 1.2, PrecioPromedio = 15m, Calificacion = 4.5, Descripcion = "Ambiente para trabajar en equipo con wifi rápido.", ImagenUrl = "" }
+                );
+                await context.SaveChangesAsync();
+            }
+
             // ----- Tareas del alumno -----
             var alumno = await userManager.FindByEmailAsync("alumno@unilife.com");
             if (alumno != null && !await context.Tareas.AnyAsync(t => t.UsuarioId == alumno.Id))

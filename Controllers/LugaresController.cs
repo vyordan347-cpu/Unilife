@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Unilife.Data;
@@ -5,6 +6,7 @@ using Unilife.Models;
 
 namespace Unilife.Controllers
 {
+    [Authorize]
     public class LugaresController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -19,9 +21,7 @@ namespace Unilife.Controllers
             var lugares = _context.Lugares.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(tipo))
-            {
                 lugares = lugares.Where(l => l.Tipo == tipo);
-            }
 
             if (!string.IsNullOrWhiteSpace(buscar))
             {
@@ -42,26 +42,26 @@ namespace Unilife.Controllers
             if (id == null) return NotFound();
 
             var lugar = await _context.Lugares.FirstOrDefaultAsync(l => l.Id == id);
-
             if (lugar == null) return NotFound();
 
             return View(lugar);
         }
 
+        [Authorize(Roles = "Coordinador")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Coordinador")]
         public async Task<IActionResult> Create(Lugar lugar)
         {
             ModelState.Remove("Id");
 
             if (!ModelState.IsValid)
-            {
                 return View(lugar);
-            }
 
             _context.Lugares.Add(lugar);
             await _context.SaveChangesAsync();
@@ -69,18 +69,20 @@ namespace Unilife.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Coordinador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
 
             var lugar = await _context.Lugares.FindAsync(id);
-
             if (lugar == null) return NotFound();
 
             return View(lugar);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Coordinador")]
         public async Task<IActionResult> Edit(int id, Lugar lugar)
         {
             if (id != lugar.Id) return NotFound();
@@ -88,9 +90,7 @@ namespace Unilife.Controllers
             ModelState.Remove("Id");
 
             if (!ModelState.IsValid)
-            {
                 return View(lugar);
-            }
 
             _context.Lugares.Update(lugar);
             await _context.SaveChangesAsync();
@@ -98,18 +98,20 @@ namespace Unilife.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Coordinador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
 
             var lugar = await _context.Lugares.FirstOrDefaultAsync(l => l.Id == id);
-
             if (lugar == null) return NotFound();
 
             return View(lugar);
         }
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Coordinador")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var lugar = await _context.Lugares.FindAsync(id);
