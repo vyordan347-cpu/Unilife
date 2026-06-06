@@ -23,19 +23,42 @@
                 <div class="logo-unilife">🛡 UniLife</div>
 
                 <a class="menu-link @Activo("Home")" asp-controller="Home" asp-action="Index">⌂ Inicio</a>
-                <a class="menu-link @Activo("Cursos")" asp-controller="Cursos" asp-action="Index">☑ Cursos</a>
-                <a class="menu-link @Activo("Lugares")" asp-controller="Lugares" asp-action="Index">⌖ Lugares</a>
-                <a class="menu-link @Activo("Eventos")" asp-controller="Eventos" asp-action="Index">▣ Eventos</a>
 
-                <!-- NUEVO ENLACE -->
+                <a class="menu-link @Activo("Cursos")" asp-controller="Cursos" asp-action="Index">
+                    ☑ Cursos
+                </a>
+
+                <a class="menu-link @Activo("Lugares")" asp-controller="Lugares" asp-action="Index">
+                    ⌖ Lugares
+                </a>
+
+                <a class="menu-link @Activo("Lugares")"
+                   asp-controller="Lugares"
+                   asp-action="Recomendados">
+                    📍 Lugares recomendados
+                </a>
+
+                <a class="menu-link @Activo("Eventos")" asp-controller="Eventos" asp-action="Index">
+                    ▣ Eventos
+                </a>
+
                 <a class="menu-link @Activo("Eventos")"
                    asp-controller="Eventos"
                    asp-action="Recomendados">
                     🎯 Eventos para ti
                 </a>
 
-                <a class="menu-link @Activo("Account")" asp-controller="Account" asp-action="Perfil">♙ Perfil</a>
-                <a class="menu-link @Activo("Tareas")" asp-controller="Tareas" asp-action="Index">☑ Tareas</a>
+                <a class="menu-link @Activo("Account")"
+                   asp-controller="Account"
+                   asp-action="Perfil">
+                    ♙ Perfil
+                </a>
+
+                <a class="menu-link @Activo("Tareas")"
+                   asp-controller="Tareas"
+                   asp-action="Index">
+                    ☑ Tareas
+                </a>
 
                 <div class="sidebar-card">
                     <strong>¡Sigue así!</strong><br />
@@ -43,7 +66,8 @@
                 </div>
 
                 <form asp-controller="Account" asp-action="Logout" method="post">
-                    <button type="submit" class="menu-link"
+                    <button type="submit"
+                            class="menu-link"
                             style="background:none;border:none;width:100%;text-align:left;cursor:pointer;">
                         ⎋ Cerrar sesión
                     </button>
