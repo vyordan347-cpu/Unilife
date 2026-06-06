@@ -1,26 +1,29 @@
 @model Unilife.Models.Lugar
 
 @{
-    ViewData["Title"] = "Detalle del lugar";
+ViewData["Title"] = "Detalle del lugar";
 
-    string icono = "☕";
-    string fondoIcono = "#fff3cd";
 
-    if (Model.Tipo == "Restaurante")
-    {
-        icono = "🍴";
-        fondoIcono = "#ffe4d6";
-    }
-    else if (Model.Tipo == "Biblioteca")
-    {
-        icono = "📚";
-        fondoIcono = "#dbeafe";
-    }
-    else if (Model.Tipo == "Coworking")
-    {
-        icono = "💻";
-        fondoIcono = "#e9d5ff";
-    }
+string icono = "☕";
+string fondoIcono = "#fff3cd";
+
+if (Model.Tipo == "Restaurante")
+{
+    icono = "🍴";
+    fondoIcono = "#ffe4d6";
+}
+else if (Model.Tipo == "Biblioteca")
+{
+    icono = "📚";
+    fondoIcono = "#dbeafe";
+}
+else if (Model.Tipo == "Coworking")
+{
+    icono = "💻";
+    fondoIcono = "#e9d5ff";
+}
+
+
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -29,9 +32,10 @@
         <p class="page-subtitle">Información completa del lugar recomendado</p>
     </div>
 
-    <a asp-action="Index" class="btn btn-light shadow-sm px-4">
-        ← Volver
-    </a>
+<a asp-action="Index" class="btn btn-light shadow-sm px-4">
+    ← Volver
+</a>
+
 </div>
 
 <div class="card border-0 shadow-lg" style="border-radius: 28px; overflow: hidden;">
@@ -43,100 +47,123 @@
                  style="width:100%; height:100%; object-fit:cover; opacity:0.85;" />
         }
 
-        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.65));"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.65));"></div>
 
-        <div style="position:absolute; left:40px; bottom:35px; color:white;">
-            <span class="badge bg-danger px-3 py-2 mb-3">@Model.Tipo</span>
-            <h1 class="fw-bold mb-2">@Model.Nombre</h1>
-            <p class="mb-0 fs-5">@Model.Descripcion</p>
+    <div style="position:absolute; left:40px; bottom:35px; color:white;">
+        <span class="badge bg-danger px-3 py-2 mb-3">@Model.Tipo</span>
+        <h1 class="fw-bold mb-2">@Model.Nombre</h1>
+        <p class="mb-0 fs-5">@Model.Descripcion</p>
+    </div>
+
+    <div style="position:absolute; right:40px; bottom:35px;">
+        <div class="bg-white shadow-lg text-center"
+             style="border-radius:20px; padding:18px 28px;">
+            <div class="fs-3">⭐</div>
+            <div class="fw-bold fs-4">@Model.Calificacion</div>
+            <small class="text-muted">de 10</small>
+        </div>
+    </div>
+</div>
+
+<div class="card-body p-5">
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="p-4 h-100 shadow-sm bg-white" style="border-radius:20px;">
+                <div class="mb-3 d-flex align-items-center justify-content-center"
+                     style="width:55px; height:55px; border-radius:16px; background:@fondoIcono; font-size:28px;">
+                    @icono
+                </div>
+                <h6 class="text-muted">Tipo</h6>
+                <h5 class="fw-bold">@Model.Tipo</h5>
+            </div>
         </div>
 
-        <div style="position:absolute; right:40px; bottom:35px;">
-            <div class="bg-white shadow-lg text-center"
-                 style="border-radius:20px; padding:18px 28px;">
-                <div class="fs-3">⭐</div>
-                <div class="fw-bold fs-4">@Model.Calificacion</div>
-                <small class="text-muted">de 10</small>
+        <div class="col-md-3">
+            <div class="p-4 h-100 shadow-sm bg-white" style="border-radius:20px;">
+                <div class="mb-3 d-flex align-items-center justify-content-center"
+                     style="width:55px; height:55px; border-radius:16px; background:#ffe4ef; font-size:25px;">
+                    📍
+                </div>
+                <h6 class="text-muted">Distancia</h6>
+                <h5 class="fw-bold">@Model.Distancia</h5>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-4 h-100 shadow-sm bg-white" style="border-radius:20px;">
+                <div class="mb-3 d-flex align-items-center justify-content-center"
+                     style="width:55px; height:55px; border-radius:16px; background:#dcfce7; font-size:25px;">
+                    💰
+                </div>
+                <h6 class="text-muted">Precio promedio</h6>
+                <h5 class="fw-bold">S/ @Model.PrecioPromedio</h5>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="p-4 h-100 shadow-sm bg-white" style="border-radius:20px;">
+                <div class="mb-3 d-flex align-items-center justify-content-center"
+                     style="width:55px; height:55px; border-radius:16px; background:#fef9c3; font-size:25px;">
+                    ⭐
+                </div>
+                <h6 class="text-muted">Calificación</h6>
+                <h5 class="fw-bold">@Model.Calificacion / 10</h5>
             </div>
         </div>
     </div>
 
-    <div class="card-body p-5">
-        <div class="row g-4 mb-4">
-            <div class="col-md-3">
-                <div class="p-4 h-100 shadow-sm bg-white" style="border-radius:20px;">
-                    <div class="mb-3 d-flex align-items-center justify-content-center"
-                         style="width:55px; height:55px; border-radius:16px; background:@fondoIcono; font-size:28px;">
-                        @icono
-                    </div>
-                    <h6 class="text-muted">Tipo</h6>
-                    <h5 class="fw-bold">@Model.Tipo</h5>
-                </div>
+    <div class="p-4 bg-light" style="border-radius:22px;">
+        <h4 class="fw-bold mb-3">Información del lugar</h4>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <span class="text-muted">Nombre</span>
+                <p class="fw-bold mb-0">@Model.Nombre</p>
             </div>
 
-            <div class="col-md-3">
-                <div class="p-4 h-100 shadow-sm bg-white" style="border-radius:20px;">
-                    <div class="mb-3 d-flex align-items-center justify-content-center"
-                         style="width:55px; height:55px; border-radius:16px; background:#ffe4ef; font-size:25px;">
-                        📍
-                    </div>
-                    <h6 class="text-muted">Distancia</h6>
-                    <h5 class="fw-bold">@Model.Distancia</h5>
-                </div>
+            <div class="col-md-6 mb-3">
+                <span class="text-muted">Dirección</span>
+                <p class="fw-bold mb-0">@Model.Direccion</p>
             </div>
 
-            <div class="col-md-3">
-                <div class="p-4 h-100 shadow-sm bg-white" style="border-radius:20px;">
-                    <div class="mb-3 d-flex align-items-center justify-content-center"
-                         style="width:55px; height:55px; border-radius:16px; background:#dcfce7; font-size:25px;">
-                        💰
-                    </div>
-                    <h6 class="text-muted">Precio promedio</h6>
-                    <h5 class="fw-bold">S/ @Model.PrecioPromedio</h5>
-                </div>
+            <div class="col-md-12">
+                <span class="text-muted">Descripción</span>
+                <p class="fw-bold mb-0">@Model.Descripcion</p>
             </div>
-
-            <div class="col-md-3">
-                <div class="p-4 h-100 shadow-sm bg-white" style="border-radius:20px;">
-                    <div class="mb-3 d-flex align-items-center justify-content-center"
-                         style="width:55px; height:55px; border-radius:16px; background:#fef9c3; font-size:25px;">
-                        ⭐
-                    </div>
-                    <h6 class="text-muted">Calificación</h6>
-                    <h5 class="fw-bold">@Model.Calificacion / 10</h5>
-                </div>
-            </div>
-        </div>
-
-        <div class="p-4 bg-light" style="border-radius:22px;">
-            <h4 class="fw-bold mb-3">Información del lugar</h4>
-
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <span class="text-muted">Nombre</span>
-                    <p class="fw-bold mb-0">@Model.Nombre</p>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <span class="text-muted">Dirección</span>
-                    <p class="fw-bold mb-0">@Model.Direccion</p>
-                </div>
-
-                <div class="col-md-12">
-                    <span class="text-muted">Descripción</span>
-                    <p class="fw-bold mb-0">@Model.Descripcion</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="d-flex flex-wrap gap-2 mt-4">
-            <a asp-action="Index" class="btn btn-secondary px-4">Volver</a>
-
-            @if (User.IsInRole("Coordinador"))
-            {
-                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning px-4">Editar</a>
-                <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger px-4">Eliminar</a>
-            }
         </div>
     </div>
+
+    <hr class="my-4" />
+
+    <h4 class="fw-bold mb-3">Valora este lugar</h4>
+
+    <form asp-action="Valorar" method="post" class="d-flex align-items-center gap-2 flex-wrap">
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" name="lugarId" value="@Model.Id" />
+
+        <select name="puntuacion" class="form-select" style="width:auto">
+            <option value="5">5 - Excelente</option>
+            <option value="4">4 - Bueno</option>
+            <option value="3">3 - Regular</option>
+            <option value="2">2 - Malo</option>
+            <option value="1">1 - Muy malo</option>
+        </select>
+
+        <button type="submit" class="btn btn-success">
+            Enviar valoración
+        </button>
+    </form>
+
+    <div class="d-flex flex-wrap gap-2 mt-4">
+        <a asp-action="Index" class="btn btn-secondary px-4">Volver</a>
+
+        @if (User.IsInRole("Coordinador"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning px-4">Editar</a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger px-4">Eliminar</a>
+        }
+    </div>
+</div>
+
 </div>

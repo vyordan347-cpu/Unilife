@@ -1,0 +1,27 @@
+@model IEnumerable<Unilife.Models.Lugar>
+@{ ViewData["Title"] = "Lugares recomendados"; }
+
+<h1>Lugares recomendados para ti</h1>
+<p class="text-muted">Según las valoraciones de la comunidad UniLife.</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Aún no hay recomendaciones. Valora algunos lugares para empezar.</div>
+}
+else
+{
+    <div class="row">
+        @foreach (var lugar in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@lugar.Nombre</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@lugar.Tipo</h6>
+                        <a asp-action="Details" asp-route-id="@lugar.Id" class="btn btn-primary btn-sm">Ver detalle</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
