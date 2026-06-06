@@ -1,0 +1,38 @@
+@model IEnumerable<Unilife.Models.Evento>
+@{ ViewData["Title"] = "Eventos recomendados"; }
+
+<h1>Eventos recomendados para ti</h1>
+
+@if (ViewBag.Carrera != null)
+{
+    <p class="text-muted">Según tu carrera: <strong>@ViewBag.Carrera</strong></p>
+}
+else
+{
+    <div class="alert alert-warning">
+        Tu perfil no tiene una carrera asignada, así que mostramos los próximos eventos.
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No hay eventos próximos por ahora.</div>
+}
+else
+{
+    <div class="row">
+        @foreach (var ev in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@ev.Titulo</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@ev.TipoEvento</h6>
+                        <p class="card-text">@ev.Descripcion</p>
+                        <p class="mb-1"><small>📅 @ev.Fecha.ToShortDateString() — 📍 @ev.Lugar</small></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
