@@ -22,6 +22,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Account/Login";
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
+builder.Services.AddScoped<Unilife.Services.RecomendadorEventosService>();
 
 var app = builder.Build();
 
