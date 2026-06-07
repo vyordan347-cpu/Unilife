@@ -18,56 +18,30 @@
 
     @if (User.Identity != null && User.Identity.IsAuthenticated)
     {
-        <div class="app-page">
-            <aside class="sidebar-unilife">
-                <div class="logo-unilife">🛡 UniLife</div>
+        <div class="app-page" id="appPage">
 
-                <a class="menu-link @Activo("Home")" asp-controller="Home" asp-action="Index">⌂ Inicio</a>
+            <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menú">☰ Menú</button>
 
-                <a class="menu-link @Activo("Cursos")" asp-controller="Cursos" asp-action="Index">
-                    ☑ Cursos
-                </a>
+            <aside class="sidebar-unilife" id="sidebar">
+                <div class="logo-unilife">
+                    <img src="/img/logo-unilife.png.png" alt="UniLife" class="logo-img" />
+                </div>
 
-                <a class="menu-link @Activo("Lugares")" asp-controller="Lugares" asp-action="Index">
-                    ⌖ Lugares
-                </a>
-
-                <a class="menu-link @Activo("Lugares")"
-                   asp-controller="Lugares"
-                   asp-action="Recomendados">
-                    📍 Lugares recomendados
-                </a>
-
-                <a class="menu-link @Activo("Eventos")" asp-controller="Eventos" asp-action="Index">
-                    ▣ Eventos
-                </a>
-
-                <a class="menu-link @Activo("Eventos")"
-                   asp-controller="Eventos"
-                   asp-action="Recomendados">
-                    🎯 Eventos para ti
-                </a>
-
-                <a class="menu-link @Activo("Account")"
-                   asp-controller="Account"
-                   asp-action="Perfil">
-                    ♙ Perfil
-                </a>
-
-                <a class="menu-link @Activo("Tareas")"
-                   asp-controller="Tareas"
-                   asp-action="Index">
-                    ☑ Tareas
-                </a>
-
+                <a class="menu-link @Activo("Home")" asp-controller="Home" asp-action="Index"><i class="bi bi-house-door"></i> Inicio</a>
+                <a class="menu-link @Activo("Cursos")" asp-controller="Cursos" asp-action="Index"><i class="bi bi-book"></i> Cursos</a>
+                <a class="menu-link @Activo("Lugares")" asp-controller="Lugares" asp-action="Index"><i class="bi bi-geo-alt"></i> Lugares</a>
+                <a class="menu-link" asp-controller="Lugares" asp-action="Recomendados"><i class="bi bi-star"></i> Lugares recomendados</a>
+                <a class="menu-link @Activo("Eventos")" asp-controller="Eventos" asp-action="Index"><i class="bi bi-calendar-event"></i> Eventos</a>
+                <a class="menu-link" asp-controller="Eventos" asp-action="Recomendados"><i class="bi bi-bullseye"></i> Eventos para ti</a>
+                <a class="menu-link @Activo("Account")" asp-controller="Account" asp-action="Perfil"><i class="bi bi-person-circle"></i> Perfil</a>
+                <a class="menu-link @Activo("Tareas")" asp-controller="Tareas" asp-action="Index"><i class="bi bi-check2-square"></i> Tareas</a>
                 <div class="sidebar-card">
                     <strong>¡Sigue así!</strong><br />
                     Has completado tus actividades esta semana.
                 </div>
 
                 <form asp-controller="Account" asp-action="Logout" method="post">
-                    <button type="submit"
-                            class="menu-link"
+                    <button type="submit" class="menu-link"
                             style="background:none;border:none;width:100%;text-align:left;cursor:pointer;">
                         ⎋ Cerrar sesión
                     </button>
