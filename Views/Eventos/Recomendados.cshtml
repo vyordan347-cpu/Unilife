@@ -1,11 +1,11 @@
 @model IEnumerable<Unilife.Models.Evento>
-@{ ViewData["Title"] = "Eventos recomendados"; }
+@{ ViewData["Title"] = "Recomendado para ti"; }
 
-<h1>Eventos recomendados para ti</h1>
+<h1>Recomendado para ti</h1>
 
 @if (ViewBag.Carrera != null)
 {
-    <p class="text-muted">Según tu carrera: <strong>@ViewBag.Carrera</strong></p>
+    <p class="text-muted">Eventos según tu carrera: <strong>@ViewBag.Carrera</strong> y el tipo de evento.</p>
 }
 else
 {
@@ -24,9 +24,10 @@ else
         @foreach (var ev in Model)
         {
             <div class="col-md-4 mb-3">
-                <div class="card h-100">
+                <div class="card h-100 shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">@ev.Titulo</h5>
+                        <span class="badge-reco">★ Recomendado para ti</span>
+                        <h5 class="card-title mt-2">@ev.Titulo</h5>
                         <h6 class="card-subtitle mb-2 text-muted">@ev.TipoEvento</h6>
                         <p class="card-text">@ev.Descripcion</p>
                         <p class="mb-1"><small>📅 @ev.Fecha.ToShortDateString() — 📍 @ev.Lugar</small></p>

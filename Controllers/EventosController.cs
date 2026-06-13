@@ -24,8 +24,12 @@ namespace Unilife.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index(string tipoEvento)
+        public async Task<IActionResult> Index(string tipoEvento, bool soloRecomendados = false)
         {
+            var usuario = await _userManager.GetUserAsync(User);
+            var recomendados = await _recomendador.ObtenerEventosRecomendadosAsync(usuario?.Carrera, 5);
+            var recomendadosIds = recomendados.Select(e => e.Id).ToHashSet();
+
             var eventos = _context.Eventos.AsQueryable();
 
             if (!string.IsNullOrEmpty(tipoEvento))
@@ -33,14 +37,20 @@ namespace Unilife.Controllers
                 eventos = eventos.Where(e => e.TipoEvento == tipoEvento);
             }
 
-            ViewBag.TipoEvento = tipoEvento;
-
             var listaEventos = await eventos.ToListAsync();
 
             listaEventos = listaEventos
                 .OrderBy(e => e.Fecha)
                 .ThenBy(e => e.Hora)
                 .ToList();
+
+            if (soloRecomendados)
+                listaEventos = listaEventos.Where(e => recomendadosIds.Contains(e.Id)).ToList();
+
+            ViewBag.TipoEvento = tipoEvento;
+            ViewBag.RecomendadosIds = recomendadosIds;
+            ViewBag.SoloRecomendados = soloRecomendados;
+            ViewBag.Carrera = usuario?.Carrera;
 
             return View(listaEventos);
         }

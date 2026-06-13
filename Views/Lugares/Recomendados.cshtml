@@ -1,12 +1,12 @@
 @model IEnumerable<Unilife.Models.Lugar>
-@{ ViewData["Title"] = "Lugares recomendados"; }
+@{ ViewData["Title"] = "Recomendado para ti"; }
 
-<h1>Lugares recomendados para ti</h1>
-<p class="text-muted">Según las valoraciones de la comunidad UniLife.</p>
+<h1>Recomendado para ti</h1>
+<p class="text-muted">Los lugares mejor calificados por la comunidad UniLife.</p>
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">Aún no hay recomendaciones. Valora algunos lugares para empezar.</div>
+    <div class="alert alert-info">Aún no hay lugares para recomendarte.</div>
 }
 else
 {
@@ -14,11 +14,13 @@ else
         @foreach (var lugar in Model)
         {
             <div class="col-md-4 mb-3">
-                <div class="card h-100">
+                <div class="card h-100 shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">@lugar.Nombre</h5>
+                        <span class="badge-reco">★ Recomendado para ti</span>
+                        <h5 class="card-title mt-2">@lugar.Nombre</h5>
                         <h6 class="card-subtitle mb-2 text-muted">@lugar.Tipo</h6>
-                        <a asp-action="Details" asp-route-id="@lugar.Id" class="btn btn-primary btn-sm">Ver detalle</a>
+                        <p class="mb-2">⭐ @lugar.Calificacion.ToString("0.0")</p>
+                        <a asp-action="Details" asp-route-id="@lugar.Id" class="btn btn-danger btn-sm">Ver detalle</a>
                     </div>
                 </div>
             </div>
