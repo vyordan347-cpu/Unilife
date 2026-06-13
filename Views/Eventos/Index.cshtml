@@ -3,10 +3,17 @@
 @{
     ViewData["Title"] = "Eventos";
     int contador = 0;
+    var recomendadosIds = ViewBag.RecomendadosIds as HashSet<int> ?? new HashSet<int>();
+    bool soloReco = (bool?)ViewBag.SoloRecomendados ?? false;
 }
 
 <h1 class="page-title">Eventos universitarios</h1>
 <p class="page-subtitle">Descubre y participa en eventos de tu universidad</p>
+
+@if (soloReco)
+{
+    <p class="page-subtitle">★ Mostrando solo lo recomendado para ti — <a asp-action="Index">ver todos</a></p>
+}
 
 <div class="d-flex flex-wrap gap-2 mb-4">
     <a asp-action="Index" class="filter-btn active">Todos</a>
@@ -34,6 +41,11 @@
                     <span>♡</span>
                 </div>
                 <div class="event-body">
+                    @if (recomendadosIds.Contains(item.Id))
+                    {
+                        <div class="mb-2"><span class="badge-reco">★ Recomendado para ti</span></div>
+                    }
+
                     <h5 class="event-title">@item.Titulo</h5>
                     <div class="info-line">📅 @item.Fecha.ToShortDateString()</div>
                     <div class="info-line">🕒 @item.Hora</div>
