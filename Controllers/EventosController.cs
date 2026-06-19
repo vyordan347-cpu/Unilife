@@ -5,6 +5,8 @@ using Unilife.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Unilife.Services;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace Unilife.Controllers
 {
@@ -14,20 +16,47 @@ namespace Unilife.Controllers
         private readonly ApplicationDbContext _context;
         private readonly RecomendadorEventosService _recomendador;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IDistributedCache _cache;
 
-        public EventosController(ApplicationDbContext context,
-                                 RecomendadorEventosService recomendador,
-                                 UserManager<ApplicationUser> userManager)
+        public EventosController(
+            ApplicationDbContext context,
+            RecomendadorEventosService recomendador,
+            UserManager<ApplicationUser> userManager,
+            IDistributedCache cache)
         {
             _context = context;
             _recomendador = recomendador;
             _userManager = userManager;
+            _cache = cache;
         }
 
         public async Task<IActionResult> Index(string tipoEvento, bool soloRecomendados = false)
         {
             var usuario = await _userManager.GetUserAsync(User);
-            var recomendados = await _recomendador.ObtenerEventosRecomendadosAsync(usuario?.Carrera, 5);
+
+            var claveCache = $"eventos_reco_{usuario?.Carrera ?? "sincarrera"}";
+            List<Evento> recomendados;
+
+            var enCache = await _cache.GetStringAsync(claveCache);
+
+            if (enCache != null)
+            {
+                recomendados = JsonSerializer.Deserialize<List<Evento>>(enCache)!;
+            }
+            else
+            {
+                recomendados = await _recomendador
+                    .ObtenerEventosRecomendadosAsync(usuario?.Carrera, 5);
+
+                await _cache.SetStringAsync(
+                    claveCache,
+                    JsonSerializer.Serialize(recomendados),
+                    new DistributedCacheEntryOptions
+                    {
+                        AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
+                    });
+            }
+
             var recomendadosIds = recomendados.Select(e => e.Id).ToHashSet();
 
             var eventos = _context.Eventos.AsQueryable();
@@ -45,7 +74,11 @@ namespace Unilife.Controllers
                 .ToList();
 
             if (soloRecomendados)
-                listaEventos = listaEventos.Where(e => recomendadosIds.Contains(e.Id)).ToList();
+            {
+                listaEventos = listaEventos
+                    .Where(e => recomendadosIds.Contains(e.Id))
+                    .ToList();
+            }
 
             ViewBag.TipoEvento = tipoEvento;
             ViewBag.RecomendadosIds = recomendadosIds;
@@ -66,7 +99,6 @@ namespace Unilife.Controllers
             return View(evento);
         }
 
-        // GET: /Eventos/Recomendados
         public async Task<IActionResult> Recomendados()
         {
             var usuario = await _userManager.GetUserAsync(User);

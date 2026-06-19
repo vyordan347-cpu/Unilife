@@ -5,6 +5,8 @@ using Unilife.Data;
 using Unilife.Models;
 using Microsoft.AspNetCore.Identity;
 using Unilife.Services;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace Unilife.Controllers
 {
@@ -14,15 +16,18 @@ namespace Unilife.Controllers
         private readonly ApplicationDbContext _context;
         private readonly RecomendadorLugaresService _recomendador;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IDistributedCache _cache;
 
         public LugaresController(
             ApplicationDbContext context,
             RecomendadorLugaresService recomendador,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IDistributedCache cache)
         {
             _context = context;
             _recomendador = recomendador;
             _userManager = userManager;
+            _cache = cache;
         }
 
         public async Task<IActionResult> Index(string tipo, string buscar, bool soloRecomendados = false)
@@ -44,7 +49,31 @@ namespace Unilife.Controllers
                     l.Descripcion.Contains(buscar));
             }
 
-            var lista = await lugares.OrderByDescending(l => l.Calificacion).ToListAsync();
+            List<Lugar> lista;
+            bool sinFiltros = string.IsNullOrWhiteSpace(tipo) && string.IsNullOrWhiteSpace(buscar);
+
+            if (sinFiltros)
+            {
+                var enCache = await _cache.GetStringAsync("lugares_todos");
+                if (enCache != null)
+                {
+                    lista = JsonSerializer.Deserialize<List<Lugar>>(enCache)!;
+                }
+                else
+                {
+                    lista = await lugares.OrderByDescending(l => l.Calificacion).ToListAsync();
+                    await _cache.SetStringAsync("lugares_todos",
+                        JsonSerializer.Serialize(lista),
+                        new DistributedCacheEntryOptions
+                        {
+                            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+                        });
+                }
+            }
+            else
+            {
+                lista = await lugares.OrderByDescending(l => l.Calificacion).ToListAsync();
+            }
 
             if (soloRecomendados)
                 lista = lista.Where(l => recomendadosIds.Contains(l.Id)).ToList();
