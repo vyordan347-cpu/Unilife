@@ -1,0 +1,79 @@
+@{
+    ViewData["Title"] = "Asistente";
+}
+
+<link rel="stylesheet" href="~/css/chatbot.css" asp-append-version="true" />
+
+<div class="chat-wrap">
+    <div class="chat-header">
+        <div class="chat-avatar"><i class="bi bi-robot"></i></div>
+        <div>
+            <h3>Asistente UniLife</h3>
+            <p>Pregúntame sobre cursos, eventos, lugares o tus tareas</p>
+        </div>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+        <div class="msg bot">¡Hola! 👋 Soy el asistente de UniLife. Puedo ayudarte con cursos, eventos, lugares cercanos y cómo usar la app. ¿En qué te ayudo?</div>
+    </div>
+
+    <div class="chat-typing" id="chatTyping">El asistente está escribiendo…</div>
+
+    <div class="chat-input-row">
+        <textarea id="chatInput" rows="1" placeholder="Escribe tu mensaje…"></textarea>
+        <button class="chat-send" id="chatSend">Enviar</button>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    const mensajes = [];
+    const body = document.getElementById('chatBody');
+    const input = document.getElementById('chatInput');
+    const typing = document.getElementById('chatTyping');
+    const btn = document.getElementById('chatSend');
+
+    function agregar(rol, texto) {
+        const div = document.createElement('div');
+        div.className = 'msg ' + (rol === 'user' ? 'user' : 'bot');
+        div.textContent = texto;
+        body.appendChild(div);
+        body.scrollTop = body.scrollHeight;
+    }
+
+    async function enviar() {
+        const texto = input.value.trim();
+        if (!texto) return;
+
+        agregar('user', texto);
+        mensajes.push({ rol: 'user', contenido: texto });
+        input.value = '';
+        typing.style.display = 'block';
+        btn.disabled = true;
+        body.scrollTop = body.scrollHeight;
+
+        try {
+            const r = await fetch('/Chatbot/Enviar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mensajes })
+            });
+            const data = await r.json();
+            const resp = data.respuesta || 'No obtuve respuesta.';
+            agregar('bot', resp);
+            mensajes.push({ rol: 'assistant', contenido: resp });
+        } catch (e) {
+            agregar('bot', 'Error de conexión. Revisa que Ollama esté abierto en tu PC.');
+        } finally {
+            typing.style.display = 'none';
+            btn.disabled = false;
+            input.focus();
+        }
+    }
+
+    btn.addEventListener('click', enviar);
+    input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); enviar(); }
+    });
+</script>
+}

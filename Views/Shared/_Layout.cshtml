@@ -1,10 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - UniLife</title>
-
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Unilife.styles.css" asp-append-version="true" />
@@ -15,43 +14,36 @@
         var controlador = ViewContext.RouteData.Values["controller"]?.ToString();
         string Activo(string c) => controlador == c ? "active" : "";
     }
-
     @if (User.Identity != null && User.Identity.IsAuthenticated)
     {
         <div class="app-page" id="appPage">
-
             <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menú">☰ Menú</button>
-
             <aside class="sidebar-unilife" id="sidebar">
                 <div class="logo-unilife">
                     <img src="/img/logo-unilife.png.png" alt="UniLife" class="logo-img" />
                 </div>
-
                 <a class="menu-link @Activo("Home")" asp-controller="Home" asp-action="Index"><i class="bi bi-house-door"></i> Inicio</a>
                 <a class="menu-link @Activo("Cursos")" asp-controller="Cursos" asp-action="Index"><i class="bi bi-book"></i> Cursos</a>
-
                 <a class="menu-link @Activo("Lugares")" asp-controller="Lugares" asp-action="Index"><i class="bi bi-geo-alt"></i> Lugares</a>
                 @if (controlador == "Lugares")
                 {
                     var lugReco = Context.Request.Query["soloRecomendados"] == "true";
                     <a class="menu-sub @(lugReco ? "active" : "")" asp-controller="Lugares" asp-action="Index" asp-route-soloRecomendados="true"><i class="bi bi-star-fill"></i> Lugares recomendados</a>
                 }
-
                 <a class="menu-link @Activo("Eventos")" asp-controller="Eventos" asp-action="Index"><i class="bi bi-calendar-event"></i> Eventos</a>
                 @if (controlador == "Eventos")
                 {
                     var evReco = Context.Request.Query["soloRecomendados"] == "true";
                     <a class="menu-sub @(evReco ? "active" : "")" asp-controller="Eventos" asp-action="Index" asp-route-soloRecomendados="true"><i class="bi bi-bullseye"></i> Eventos para ti</a>
                 }
-
                 <a class="menu-link @Activo("Account")" asp-controller="Account" asp-action="Perfil"><i class="bi bi-person-circle"></i> Perfil</a>
                 <a class="menu-link @Activo("Tareas")" asp-controller="Tareas" asp-action="Index"><i class="bi bi-check2-square"></i> Tareas</a>
+                <a class="menu-link @Activo("Chatbot")" asp-controller="Chatbot" asp-action="Index"><i class="bi bi-robot"></i> Asistente</a>
 
                 <div class="sidebar-card">
                     <strong>¡Sigue así!</strong><br />
                     Has completado tus actividades esta semana.
                 </div>
-
                 <form asp-controller="Account" asp-action="Logout" method="post">
                     <button type="submit" class="menu-link"
                             style="background:none;border:none;width:100%;text-align:left;cursor:pointer;">
@@ -59,7 +51,6 @@
                     </button>
                 </form>
             </aside>
-
             <main class="content-unilife">
                 @RenderBody()
             </main>
@@ -69,7 +60,6 @@
     {
         @RenderBody()
     }
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

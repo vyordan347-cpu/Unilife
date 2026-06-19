@@ -25,6 +25,9 @@ builder.Services.AddScoped<Unilife.Services.RecomendadorEventosService>();
 
 builder.Services.AddScoped<Unilife.Services.RecomendadorLugaresService>();
 
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<Unilife.Services.ChatbotService>();
+
 var app = builder.Build();
 
 
