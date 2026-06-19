@@ -25,8 +25,24 @@ builder.Services.AddScoped<Unilife.Services.RecomendadorEventosService>();
 
 builder.Services.AddScoped<Unilife.Services.RecomendadorLugaresService>();
 
-builder.Services.AddHttpClient();
-builder.Services.AddScoped<Unilife.Services.ChatbotService>();
+// ----- Caché distribuido -----
+// Si hay conexión de Redis configurada (en Render), usa Redis.
+// Si no (en tu PC), usa un caché en memoria. El código de caché es el mismo.
+var redisConn = builder.Configuration.GetConnectionString("Redis")
+                ?? builder.Configuration["Redis:ConnectionString"];
+
+if (!string.IsNullOrWhiteSpace(redisConn))
+{
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = redisConn;
+        options.InstanceName = "Unilife:";
+    });
+}
+else
+{
+    builder.Services.AddDistributedMemoryCache();
+}
 
 var app = builder.Build();
 
